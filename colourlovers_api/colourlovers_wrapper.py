@@ -2,7 +2,7 @@
 import collections
 import json
 from urllib.request import Request, urlopen, URLError
-from colourlovers_data_containers import *
+from colourlovers_api.colourlovers_data_containers import *
 
 
 # TODO
