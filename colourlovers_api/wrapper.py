@@ -310,20 +310,19 @@ class ColourLovers(object):
         :param request_type_class:
         :return:
         """
-        if api_response is not None:
-            if raw_data:
-                return api_response
-            else:
-                parsed_json = json.loads(api_response)
-                if type(parsed_json) == dict:
-                    response_containers = request_type_class(parsed_json)
-                else:
-                    response_containers = []
-                    for element in parsed_json:
-                        response_containers += [request_type_class(element)]
-                return response_containers
-        else:
+        if not api_response:
             return None
+        if raw_data:
+            return api_response
+        else:
+            parsed_json = json.loads(api_response)
+            if type(parsed_json) == dict:
+                response_containers = request_type_class(parsed_json)
+            else:
+                response_containers = []
+                for element in parsed_json:
+                    response_containers += [request_type_class(element)]
+            return response_containers
 
     def __process_optional_requests(self, search_type, **kwargs):
         """
