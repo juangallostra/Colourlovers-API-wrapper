@@ -257,17 +257,17 @@ class ColourLovers(object):
                 elif parameter_type[1] == list:
                     parameter_values_types = [type(parameter_value) for parameter_value in
                                               kwargs.values()[parameter_type[0]]]
-                    type_selector = parameter_values_types[
-                        0]  # Select the type of the first value in list as the parameter type
+                    # Select the type of the first value in list as the parameter type
                     # and look for inconsistencies or invalid types
+                    type_selector = parameter_values_types[0]
                     if type_selector not in [str, int]:
                         raise ValueError("Unsupported value type in argument " + str(kwargs.keys()[parameter_type[0]]))
                     for parameter_value_type in parameter_values_types:
                         if parameter_value_type != type_selector:
                             raise ValueError(
                                 "Inconsistent value types in argument " + str(kwargs.keys()[parameter_type[0]]))
-        else:
-            return True
+
+        return True
 
     def __request(self, search_term, optional_request_term, **kwargs):
         """
@@ -310,20 +310,19 @@ class ColourLovers(object):
         :param request_type_class:
         :return:
         """
-        if api_response is not None:
-            if raw_data:
-                return api_response
-            else:
-                parsed_json = json.loads(api_response)
-                if type(parsed_json) == dict:
-                    response_containers = request_type_class(parsed_json)
-                else:
-                    response_containers = []
-                    for element in parsed_json:
-                        response_containers += [request_type_class(element)]
-                return response_containers
-        else:
+        if not api_response:
             return None
+        if raw_data:
+            return api_response
+        else:
+            parsed_json = json.loads(api_response)
+            if type(parsed_json) == dict:
+                response_containers = request_type_class(parsed_json)
+            else:
+                response_containers = []
+                for element in parsed_json:
+                    response_containers += [request_type_class(element)]
+            return response_containers
 
     def __process_optional_requests(self, search_type, **kwargs):
         """
@@ -333,23 +332,23 @@ class ColourLovers(object):
         :return:
         """
         processed_request = collections.namedtuple('Processed_request', ['kwargs', 'optional_request'])
-
         optional_request_term = None
 
         if self.__API_REQUEST_KEYWORD in kwargs.keys():
-            if type(kwargs[self.__API_REQUEST_KEYWORD]) == str:
-                request = set({kwargs[self.__API_REQUEST_KEYWORD]})
-                valid_request = bool(request.intersection(self.__API_REQUEST_TYPE[search_type]))
-                if valid_request:
-                    optional_request_term = self.__API_ADD_PARAM[3] + kwargs[self.__API_REQUEST_KEYWORD]
-                    del kwargs[self.__API_REQUEST_KEYWORD]
-                    # if the optional request is random/the search is for stats
-                    # then ignore the rest of arguments since they are not allowed
-                    if self.__API_EXCLUSIVE_REQUEST in request or search_type == self.__API_STATS:
-                        kwargs = {}
-                else:
-                    raise ValueError("Unsupported request argument/s: " + kwargs[self.__API_REQUEST_KEYWORD])
-            else:
+            if type(kwargs[self.__API_REQUEST_KEYWORD]) != str:
                 raise ValueError("Unsupported request argument type: " + str(type(kwargs[self.__API_REQUEST_KEYWORD])))
+
+            request = set({kwargs[self.__API_REQUEST_KEYWORD]})
+            valid_request = bool(request.intersection(self.__API_REQUEST_TYPE[search_type]))
+
+            if not valid_request:
+                raise ValueError("Unsupported request argument/s: " + kwargs[self.__API_REQUEST_KEYWORD])
+
+            optional_request_term = self.__API_ADD_PARAM[3] + kwargs[self.__API_REQUEST_KEYWORD]
+            del kwargs[self.__API_REQUEST_KEYWORD]
+            # if the optional request is random/the search is for stats
+            # then ignore the rest of arguments since they are not allowed
+            if self.__API_EXCLUSIVE_REQUEST in request or search_type == self.__API_STATS:
+                kwargs = {}
 
         return processed_request(kwargs=kwargs, optional_request=optional_request_term)
