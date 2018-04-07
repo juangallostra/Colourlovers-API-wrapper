@@ -257,17 +257,17 @@ class ColourLovers(object):
                 elif parameter_type[1] == list:
                     parameter_values_types = [type(parameter_value) for parameter_value in
                                               kwargs.values()[parameter_type[0]]]
-                    type_selector = parameter_values_types[
-                        0]  # Select the type of the first value in list as the parameter type
+                    # Select the type of the first value in list as the parameter type
                     # and look for inconsistencies or invalid types
+                    type_selector = parameter_values_types[0]
                     if type_selector not in [str, int]:
                         raise ValueError("Unsupported value type in argument " + str(kwargs.keys()[parameter_type[0]]))
                     for parameter_value_type in parameter_values_types:
                         if parameter_value_type != type_selector:
                             raise ValueError(
                                 "Inconsistent value types in argument " + str(kwargs.keys()[parameter_type[0]]))
-        else:
-            return True
+
+        return True
 
     def __request(self, search_term, optional_request_term, **kwargs):
         """
