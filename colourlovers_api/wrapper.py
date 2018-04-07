@@ -23,43 +23,147 @@ class ColourLovers(object):
     def __init__(self):
 
         self.__API_URL = "http://www.colourlovers.com/api/"
-
         # When searching for new, top or random use the request keyword in the called search method
         self.__API_REQUEST_KEYWORD = "request"
         self.__API_EXCLUSIVE_REQUEST = "random"
-        self.__API_REQUEST_TYPE = {"colors": set({"new", "top", "random"}),
-                                   "palettes": set({"new", "top", "random"}),
-                                   "patterns": set({"new", "top", "random"}),
-                                   "lovers": set({"new", "top"}),
-                                   "stats": set({"colors", "palettes", "patterns", "lovers"}),
-                                   "color": set(),
-                                   "palette": set(),
-                                   "pattern": set(),
-                                   "lover": set()}
-
-        self.__API_PARAMETERS = {"colors": set(
-            {"lover", "hueRange", "briRange", "keywords", "keywordExact", "orderCol", "sortBy", "numResults",
-             "resultOffset", "format", "jsonCallback"}),
+        self.__API_REQUEST_TYPE = {
+            "colors": set(
+                {
+                    "new",
+                    "top",
+                    "random"
+                }
+            ),
             "palettes": set(
-                {"lover", "hueOption", "hex", "hex_logic", "keywords", "keywordExact", "orderCol",
-                 "sortBy", "numResults", "resultOffset", "format", "jsonCallback",
-                 "showPaletteWidths"}),
+                {
+                    "new",
+                    "top",
+                    "random"
+                }
+            ),
             "patterns": set(
-                {"lover", "hueOption", "hex", "hex_logic", "keywords", "keywordExact", "orderCol",
-                 "sortBy", "numResults", "resultOffset", "format", "jsonCallback"}),
+                {
+                    "new",
+                    "top",
+                    "random"
+                }
+            ),
             "lovers": set(
-                {"orderCol", "sortBy", "numResults", "resultOffset", "format", "jsonCallback"}),
-            "stats": set({"format", "jsonCallback"}),
-            "color": set({"format", "jsonCallback"}),
-            "palette": set({"id", "format", "jsonCallback"}),
-            "pattern": set({"format", "jsonCallback"}),
-            "lover": set({"comments", "format", "jsonCallback"})}
-
-        self.__API_SWITCHES = {"palette": set({"showPaletteWidths"}),
-                               "lover": set({"comments"})}
-
+                {
+                    "new",
+                    "top"
+                }
+            ),
+            "stats": set(
+                {
+                    "colors",
+                    "palettes",
+                    "patterns",
+                    "lovers"
+                }
+            ),
+            "color": set(),
+            "palette": set(),
+            "pattern": set(),
+            "lover": set()
+        }
+        self.__API_PARAMETERS = {
+            "colors": set(
+                {
+                    "lover",
+                    "hueRange",
+                    "briRange",
+                    "keywords",
+                    "keywordExact",
+                    "orderCol",
+                    "sortBy",
+                    "numResults",
+                    "resultOffset",
+                    "format",
+                    "jsonCallback"
+                }
+            ),
+            "palettes": set(
+                {
+                    "lover",
+                    "hueOption",
+                    "hex",
+                    "hex_logic",
+                    "keywords",
+                    "keywordExact",
+                    "orderCol",
+                    "sortBy",
+                    "numResults",
+                    "resultOffset",
+                    "format",
+                    "jsonCallback",
+                    "showPaletteWidths"
+                }
+            ),
+            "patterns": set(
+                {
+                    "lover",
+                    "hueOption",
+                    "hex",
+                    "hex_logic",
+                    "keywords",
+                    "keywordExact",
+                    "orderCol",
+                    "sortBy",
+                    "numResults",
+                    "resultOffset",
+                    "format",
+                    "jsonCallback"
+                }
+            ),
+            "lovers": set(
+                {
+                    "orderCol",
+                    "sortBy",
+                    "numResults",
+                    "resultOffset",
+                    "format",
+                    "jsonCallback"
+                }
+            ),
+            "stats": set(
+                {
+                    "format",
+                    "jsonCallback"
+                }
+            ),
+            "color": set(
+                {
+                    "format",
+                    "jsonCallback"
+                }
+            ),
+            "palette": set(
+                {
+                    "id",
+                    "format",
+                    "jsonCallback"
+                }
+            ),
+            "pattern": set(
+                {
+                    "format",
+                    "jsonCallback"
+                }
+            ),
+            "lover": set(
+                {
+                    "comments",
+                    "format",
+                    "jsonCallback"
+                }
+            )
+        }
+        self.__API_SWITCHES = {
+            "palette": set({"showPaletteWidths"}),
+            "lover": set({"comments"})
+        }
         self.__API_ADD_PARAM = ["&", "=", "?", "/"]
-
         self.__API_COLORS = "colors"
         self.__API_PALETTES = "palettes"
         self.__API_PATTERNS = "patterns"
@@ -69,7 +173,6 @@ class ColourLovers(object):
         self.__API_PALETTE = "palette"
         self.__API_PATTERN = "pattern"
         self.__API_LOVER = "lover"
-
         # Public methods
         self.search_colors = self.__public_api_method(self.__API_COLORS, Color)
         self.search_color = self.__public_api_method(self.__API_COLOR, Color)
@@ -82,15 +185,30 @@ class ColourLovers(object):
         self.search_stats = self.__public_api_method(self.__API_STATS, Stats)
 
     # Private methods
-
     def __public_api_method(self, search_type, data_container):
+        """
+
+        :param search_type:
+        :param data_container:
+        :return:
+        """
         def _api_search(raw_data=False, **kwargs):
+            """
+
+            :param raw_data:
+            :param kwargs:
+            :return:
+            """
             processed_request = self.__process_optional_requests(search_type, **kwargs)
 
-            if not raw_data:  # if user hasn't asked for the raw data of the API response build container objects
+            if not raw_data:
+                # if user hasn't asked for the raw data of the API
+                # response build container objects
                 processed_request.kwargs["format"] = "json"
 
-            api_response = self.__search(search_type, processed_request.optional_request, **processed_request.kwargs).decode()
+            api_response = self.__search(search_type,
+                                         processed_request.optional_request,
+                                         **processed_request.kwargs).decode()
             containers = self.__process_response(raw_data, api_response, data_container)
             if containers is not None:
                 return containers
@@ -99,6 +217,13 @@ class ColourLovers(object):
         return _api_search
 
     def __search(self, search_term, optional_request_term, **kwargs):
+        """
+
+        :param search_term:
+        :param optional_request_term:
+        :param kwargs:
+        :return:
+        """
         try:
             self.__check_args(search_term, **kwargs)
         except ValueError as e:
@@ -107,6 +232,12 @@ class ColourLovers(object):
         return self.__request(search_term, optional_request_term, **kwargs)
 
     def __check_args(self, search_term, **kwargs):
+        """
+
+        :param search_term:
+        :param kwargs:
+        :return:
+        """
         if search_term not in self.__API_REQUEST_TYPE.keys():
             raise ValueError("Unsupported search: " + search_term)
 
@@ -139,6 +270,13 @@ class ColourLovers(object):
             return True
 
     def __request(self, search_term, optional_request_term, **kwargs):
+        """
+
+        :param search_term:
+        :param optional_request_term:
+        :param kwargs:
+        :return:
+        """
         # build API request
         try:
             api_request_url = self.__API_URL + search_term + optional_request_term
@@ -165,6 +303,13 @@ class ColourLovers(object):
             print(e)
 
     def __process_response(self, raw_data, api_response, request_type_class):
+        """
+
+        :param raw_data:
+        :param api_response:
+        :param request_type_class:
+        :return:
+        """
         if api_response is not None:
             if raw_data:
                 return api_response
@@ -181,6 +326,12 @@ class ColourLovers(object):
             return None
 
     def __process_optional_requests(self, search_type, **kwargs):
+        """
+
+        :param search_type:
+        :param kwargs:
+        :return:
+        """
         processed_request = collections.namedtuple('Processed_request', ['kwargs', 'optional_request'])
 
         optional_request_term = None
