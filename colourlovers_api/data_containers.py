@@ -3,6 +3,7 @@ from PIL import Image, ImageDraw
 
 
 # Data containers for API responses
+# Base classes
 class CommonData(object):
     def __init__(self, json_data):
         self.id = json_data["id"]
@@ -21,17 +22,7 @@ class CommonData(object):
         self.api_url = json_data["apiUrl"]
 
 
-class Palette(CommonData):
-    def __init__(self, json_data):
-        CommonData.__init__(self, json_data)
-        try:
-            self.color_widths = json_data["colorWidths"]
-        except:
-            pass
-
-        self.colors = json_data["colors"]
-        self.num_colors = len(self.colors)
-
+class HexConverter(CommonData):
     def hex_to_rgb(self):
         # Converts color in hex to RGB. Returns list of tuples where the channel order is (R,G,B)
         return [tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4)) for hex_color in self.colors]
@@ -40,14 +31,28 @@ class Palette(CommonData):
         # Converts color in hex to HSV. Returns list of tuples such that each tuple is (H,S,V)
         return [tuple(colorsys.rgb_to_hsv(rgb_color[0], rgb_color[1], rgb_color[2])) for rgb_color in self.hex_to_rgb()]
 
+# Particular classes for each type of object
+class Palette(HexConverter):
+    def __init__(self, json_data):
+        HexConverter.__init__(self, json_data)
+        try:
+            self.color_widths = json_data["colorWidths"]
+        except:
+            pass
+
+        self.colors = json_data["colors"]
+        self.num_colors = len(self.colors)
+
     def draw(self, tile_size=24, offset=8):
         # Allows the visualization of the palette
         im = Image.new("RGB", ((offset+tile_size+offset)*self.num_colors, tile_size), "black")
         draw = ImageDraw.Draw(im)
         rgb_colors = self.hex_to_rgb()
         for i in range(self.num_colors):
-            draw.rectangle((((offset+tile_size)*i, 0), ((offset+tile_size)*(i+1)-offset, tile_size)), fill=rgb_colors[i])
-
+            draw.rectangle(
+                (((offset+tile_size)*i, 0), ((offset+tile_size)*(i+1)-offset, tile_size)),
+                fill=rgb_colors[i]
+            )
         im.show()
 
 
@@ -62,23 +67,18 @@ class Color(CommonData):
         # Allows visualization of the color
         im = Image.new("RGB", ((offset+tile_size+offset), tile_size), "black")
         draw = ImageDraw.Draw(im)
-        draw.rectangle((((offset+tile_size), 0), (tile_size, tile_size)), fill=self.RGB.rgb)
+        draw.rectangle(
+            (((offset+tile_size), 0), (tile_size, tile_size)),
+            fill=self.RGB.rgb
+        )
         im.show()
 
 
-class Pattern(CommonData):
+class Pattern(HexConverter):
     def __init__(self, json_data):
-        CommonData.__init__(self, json_data)
+        HexConverter.__init__(self, json_data)
         self.colors = json_data["colors"]
         self.num_colors = len(self.colors)
-
-    def hex_to_rgb(self):
-        # converts color in hex to RGB. Returns list of tuples where the channel order is (R,G,B)
-        return [tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4)) for hex_color in self.colors]
-
-    def hex_to_hsv(self):
-        # converts color in hex to HSV. Returns list of tuples such that each tuple is (H,S,V)
-        return [tuple(colorsys.rgb_to_hsv(rgb_color[0], rgb_color[1], rgb_color[2])) for rgb_color in self.hex_to_rgb()]
 
     def draw(self, tile_size=24, offset=8):
         # Allows the visualization of the palette
@@ -86,8 +86,10 @@ class Pattern(CommonData):
         draw = ImageDraw.Draw(im)
         rgb_colors = self.hex_to_rgb()
         for i in range(self.num_colors):
-            draw.rectangle((((offset+tile_size)*i, 0), ((offset+tile_size)*(i+1)-offset, tile_size)), fill=rgb_colors[i])
-
+            draw.rectangle(
+                (((offset+tile_size)*i, 0),((offset+tile_size)*(i+1)-offset,tile_size)),
+                fill=rgb_colors[i]
+            )
         im.show()
 
 
