@@ -332,23 +332,23 @@ class ColourLovers(object):
         :return:
         """
         processed_request = collections.namedtuple('Processed_request', ['kwargs', 'optional_request'])
-
         optional_request_term = None
 
         if self.__API_REQUEST_KEYWORD in kwargs.keys():
-            if type(kwargs[self.__API_REQUEST_KEYWORD]) == str:
-                request = set({kwargs[self.__API_REQUEST_KEYWORD]})
-                valid_request = bool(request.intersection(self.__API_REQUEST_TYPE[search_type]))
-                if valid_request:
-                    optional_request_term = self.__API_ADD_PARAM[3] + kwargs[self.__API_REQUEST_KEYWORD]
-                    del kwargs[self.__API_REQUEST_KEYWORD]
-                    # if the optional request is random/the search is for stats
-                    # then ignore the rest of arguments since they are not allowed
-                    if self.__API_EXCLUSIVE_REQUEST in request or search_type == self.__API_STATS:
-                        kwargs = {}
-                else:
-                    raise ValueError("Unsupported request argument/s: " + kwargs[self.__API_REQUEST_KEYWORD])
-            else:
+            if type(kwargs[self.__API_REQUEST_KEYWORD]) != str:
                 raise ValueError("Unsupported request argument type: " + str(type(kwargs[self.__API_REQUEST_KEYWORD])))
+
+            request = set({kwargs[self.__API_REQUEST_KEYWORD]})
+            valid_request = bool(request.intersection(self.__API_REQUEST_TYPE[search_type]))
+
+            if not valid_request:
+                raise ValueError("Unsupported request argument/s: " + kwargs[self.__API_REQUEST_KEYWORD])
+
+            optional_request_term = self.__API_ADD_PARAM[3] + kwargs[self.__API_REQUEST_KEYWORD]
+            del kwargs[self.__API_REQUEST_KEYWORD]
+            # if the optional request is random/the search is for stats
+            # then ignore the rest of arguments since they are not allowed
+            if self.__API_EXCLUSIVE_REQUEST in request or search_type == self.__API_STATS:
+                kwargs = {}
 
         return processed_request(kwargs=kwargs, optional_request=optional_request_term)
