@@ -31,6 +31,23 @@ class HexConverter(CommonData):
         # Converts color in hex to HSV. Returns list of tuples such that each tuple is (H,S,V)
         return [tuple(colorsys.rgb_to_hsv(rgb_color[0], rgb_color[1], rgb_color[2])) for rgb_color in self.hex_to_rgb()]
 
+
+class RGB(object):
+    def __init__(self, rgb):
+        self.red = rgb["red"]
+        self.green = rgb["green"]
+        self.blue = rgb["blue"]
+        self.rgb = (self.red, self.green, self.blue)
+
+
+class HSV(object):
+    def __init__(self, hsv):
+        self.hue = hsv["hue"]
+        self.saturation = hsv["saturation"]
+        self.value = hsv["value"]
+        self.hsv = (self.hue, self.saturation, self.value)
+
+
 # Particular classes for each type of object
 class Palette(HexConverter):
     def __init__(self, json_data):
@@ -117,19 +134,3 @@ class Lover(object):
 class Stats(object):
     def __init__(self, json_data):
         self.total = json_data["total"]
-
-
-class RGB(object):
-    def __init__(self, rgb):
-        self.red = rgb["red"]
-        self.green = rgb["green"]
-        self.blue = rgb["blue"]
-        self.rgb = (self.red, self.green, self.blue)
-
-
-class HSV(object):
-    def __init__(self, hsv):
-        self.hue = hsv["hue"]
-        self.saturation = hsv["saturation"]
-        self.value = hsv["value"]
-        self.hsv = (self.hue, self.saturation, self.value)
