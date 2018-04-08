@@ -226,9 +226,9 @@ class ColourLovers(object):
                 # the data in json format
                 processed_request.kwargs["format"] = "json"
             # Once parameters have been validated make the query to the API
-            api_response = self.__search(search_type,
-                                         processed_request.optional_request,
-                                         **processed_request.kwargs).decode()
+            api_response = self.__query(search_type,
+                                        processed_request.optional_request,
+                                        **processed_request.kwargs).decode()
             # Process the data obtained from the query. We will build container
             # objects by default unless otherwise specified
             containers = self.__process_response(raw_data, api_response, data_container)
@@ -238,7 +238,7 @@ class ColourLovers(object):
                 print("The data you asked for could not be retrieved")
         return _api_search
 
-    def __search(self, search_term, optional_request_term, **kwargs):
+    def __query(self, search_term, optional_request_term, **kwargs):
         """
 
         :param search_term:
