@@ -104,7 +104,7 @@ class Pattern(HexConverter):
         rgb_colors = self.hex_to_rgb()
         for i in range(self.num_colors):
             draw.rectangle(
-                (((offset+tile_size)*i, 0),((offset+tile_size)*(i+1)-offset,tile_size)),
+                (((offset+tile_size)*i, 0), ((offset+tile_size)*(i+1)-offset, tile_size)),
                 fill=rgb_colors[i]
             )
         im.show()
