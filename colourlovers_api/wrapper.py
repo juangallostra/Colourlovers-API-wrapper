@@ -201,9 +201,10 @@ class ColourLovers(object):
         """
         def _api_search(raw_data=False, **kwargs):
             """
-            This method validates the query parameters and, if all
+            This method validates the request parameters and, if all
             of them are valid, builds the request and posts it to the
-            API.
+            API. It will return the data obtained from the response either
+            as raw data or as a Python object.
 
             :param raw_data: Specifies how the data from the response
             should be treated. If True, the data is returned as it is obtained
@@ -216,8 +217,8 @@ class ColourLovers(object):
             :return: The data obtained from the request, either as raw data or as a
             Python object
             """
-            # Validate the kwargs taking into account the type of request that is to be
-            # performed
+            # Validate the type of request (new, top, random, ...) taking into account the
+            # type of request (pattern, palette, colour, ...) that is to be performed
             processed_request = self.__process_optional_requests(search_type, **kwargs)
 
             if not raw_data:
@@ -225,7 +226,7 @@ class ColourLovers(object):
                 # response build container objects. For that, we need
                 # the data in json format
                 processed_request.kwargs["format"] = "json"
-            # Once parameters have been validated make the query to the API
+            # Once request type has been validated make the query to the API
             api_response = self.__query(search_type,
                                         processed_request.optional_request,
                                         **processed_request.kwargs).decode()
@@ -240,42 +241,55 @@ class ColourLovers(object):
 
     def __query(self, search_term, optional_request_term, **kwargs):
         """
+        Make the API query after checking parameter validity (request type has
+        already been validated for the specific search type) and return the obtained
+        response as raw data, either in json or xml format.
 
-        :param search_term:
-        :param optional_request_term:
-        :param kwargs:
-        :return:
+        :param search_term: the main type of query to be performed from the different
+        available type (pattern, palette, lover, color, ...)
+        :param optional_request_term: if an optional request term has to be included
+        in the query (new, top, random)
+        :param kwargs: parameters of the query as keyword arguments where the keyword
+        is the parameter name and its value is the parameter value
+        :return: the response of the request as raw data in json or xml format
         """
+        # Check parameter validity  both by name and type
         try:
             self.__check_args(search_term, **kwargs)
         except ValueError as e:
             print(e)
-
+        # If no errors were raised make the query to the API and return the
+        # obtained raw data
         return self.__request(search_term, optional_request_term, **kwargs)
 
     def __check_args(self, search_term, **kwargs):
         """
+        Check the validity of optional request parameters type and name as
+        taking into account the type of query (pattern, palette, color, ...)
+        to be performed.
 
-        :param search_term:
-        :param kwargs:
-        :return:
+        :param search_term: the main type of the query to be performed. It will
+        be used to know which is the list of valid parameters.
+        :param kwargs: Name and value of the optional parameters
+        :return: True if the parameters are valid. Otherwise an exception will be
+        raised
         """
+        # First check the validity of the type of request
         if search_term not in self.__API_REQUEST_TYPE.keys():
             raise ValueError("Unsupported search: " + search_term)
-
+        # Then check the validity of the optional parameters
         elif kwargs is not None:
-            # Look for invalid arguments
+            # Look for invalid parameter names
             invalid_parameters = set(kwargs.keys()) - self.__API_PARAMETERS[search_term]
             if invalid_parameters:
                 raise ValueError("Unsupported search argument/s: " + ', '.join(invalid_parameters))
-
-            # Look for invalid argument value types
+            # Look for invalid parameter value types
             types = [(i, type(value)) for (i, value) in enumerate(kwargs.values())]
             for parameter_type in types:
                 if parameter_type[1] not in [list, str, int]:
                     raise ValueError("Unsupported argument value type " + str(parameter_type))
                 # If the argument value is a list, the type of all the elements in the list should be
-                # a valid type and the same type for all the values
+                # a valid type and also, all the values should be of the same type
                 elif parameter_type[1] == list:
                     parameter_values_types = [type(parameter_value) for parameter_value in
                                               kwargs.values()[parameter_type[0]]]
@@ -288,7 +302,6 @@ class ColourLovers(object):
                         if parameter_value_type != type_selector:
                             raise ValueError(
                                 "Inconsistent value types in argument " + str(kwargs.keys()[parameter_type[0]]))
-
         return True
 
     def __request(self, search_term, optional_request_term, **kwargs):
