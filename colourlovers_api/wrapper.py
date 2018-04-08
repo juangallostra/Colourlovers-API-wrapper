@@ -13,6 +13,7 @@ from colourlovers_api.data_containers import *
 # DONE	- valid parameter types when doing unique searches
 # 		- unicode to string conversion ? 
 # DONE	- stats search
+#       - allow search by id in pattern, palette
 
 
 # API Wrapper
@@ -140,7 +141,6 @@ class ColourLovers(object):
             ),
             "palette": set(
                 {
-                    "id",
                     "format",
                     "jsonCallback"
                 }
@@ -187,28 +187,50 @@ class ColourLovers(object):
     # Private methods
     def __public_api_method(self, search_type, data_container):
         """
+        Closure that, given a main search type (patterns, palettes,
+        colours, lovers, ...) and the class that will store the
+        obtained data from the API response, returns a function that
+        will know how to query the API for info of that specific type
 
-        :param search_type:
-        :param data_container:
-        :return:
+        :param search_type: The type of search we want the function to
+        perform: patterns, palettes, colors, ...
+        :param data_container: The class that will store the data obtained
+        from the query to the API
+        :return: function that will know how to make queries for the specified
+        type and process and store the obtained data
         """
         def _api_search(raw_data=False, **kwargs):
             """
+            This method validates the query parameters and, if all
+            of them are valid, builds the request and posts it to the
+            API.
 
-            :param raw_data:
-            :param kwargs:
-            :return:
+            :param raw_data: Specifies how the data from the response
+            should be treated. If True, the data is returned as it is obtained
+            from the API response without any treatment. If False, the
+            corresponding Python object to store the obtained data is created and
+            returned
+            :param kwargs: query parameters for the specified type of request (Pattern,
+            Palette, ...). The keyword is the parameter name and the value is the parameter
+            value
+            :return: The data obtained from the request, either as raw data or as a
+            Python object
             """
+            # Validate the kwargs taking into account the type of request that is to be
+            # performed
             processed_request = self.__process_optional_requests(search_type, **kwargs)
 
             if not raw_data:
                 # if user hasn't asked for the raw data of the API
-                # response build container objects
+                # response build container objects. For that, we need
+                # the data in json format
                 processed_request.kwargs["format"] = "json"
-
+            # Once parameters have been validated make the query to the API
             api_response = self.__search(search_type,
                                          processed_request.optional_request,
                                          **processed_request.kwargs).decode()
+            # Process the data obtained from the query. We will build container
+            # objects by default unless otherwise specified
             containers = self.__process_response(raw_data, api_response, data_container)
             if containers is not None:
                 return containers
