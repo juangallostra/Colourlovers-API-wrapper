@@ -53,7 +53,7 @@ class HSV(object):
 class DrawColors(object):
     def __init__(self, rgb_colors):
         self.rgb_colors = rgb_colors
-        self.num_colors = len(self.colors)
+        self.num_colors = len(self.rgb_colors)
 
     def draw(self, tile_size=24, offset=8):
         # Allows the visualization of colors
