@@ -2,6 +2,7 @@
 Python wrapper for the [API](http://www.colourlovers.com/api) provided by www.colourlovers.com
 
 ## Requirements
+* Python 3
 * PIL or Pillow
 * colorsys
 
