@@ -18,7 +18,7 @@ Python wrapper for the [API](http://www.colourlovers.com/api) provided by www.co
 	```
 ### Queries
 Once we have created the API wrapper object (```cl``` in the present case) we are ready to query the API. The ColourLovers API queries are structured in three levels:
-1. Object of the query. The possible query objects are: Color/s, Pattern/s, Palette/s, Lover/s or stats. Note that most of the objects can be queried in plural or in singular. The wrapper offers a different method for each object, being:
+1. Object of the query. The possible query objects are: Color/s, Pattern/s, Palette/s, Lover/s or stats. Note that most of the objects can be queried in plural or in singular. The wrapper offers a different method for each object, all of them being:
 	```python
 		>>> cl.search_palette()  # Query for a single palette
 		>>> cl.search_pattern()  # Query for a single pattern
@@ -30,10 +30,24 @@ Once we have created the API wrapper object (```cl``` in the present case) we ar
 		>>> cl.search_lovers()  # Query for multiple users
 		>>> cl.search_stats()  # Query for a single pattern
 	```
-    Each of these methods only accepts keyword arguments. Optionally, a first positional argument can be passed specifying whether the response of the query should be returned as raw data or as a python object. By default the responses will be returned as Python objects. Hence, a general
-
-2. Type of the query. The possible query types depend on the object of the query 
-
+    Each of these methods only accepts keyword arguments. Optionally, a first boolean positional argument can be passed specifying whether the response of the query should be returned as raw data or as a Python object. By default the response of a query will be returned as a Python object. Hence, the general form of a query to the API is:
+	```python
+		>>> cl.search_patterns(True, kwargs)  # Response will be returned as raw data
+		>>> cl.search_patterns(kwargs)  # Response will be returned as a Python object
+	```
+    We will get back to this later.
+2. Type of the query. The possible query types depend on the object of the query and are specified via the ```request``` keyword. 
+    | Object          | Supported Types |
+    | :-------------: |:---------------:|
+    | Palettes        | ```new```, ```top```, ```random``` or None                 |
+    | Patterns        | ```new```, ```top```, ```random``` or None                 |
+    | Colors          | ```new```, ```top```, ```random``` or None                 |
+    | Lovers          | ```new```, ```top```, or None                              |
+    | Palette         | None                                                       |
+    | Pattern         | None                                                       |
+    | Color           | None                                                       |
+    | Lover           | None                                                       |
+    | Stats           | ```colors```, ```palettes```, ```patterns```, ```lovers``` |
 
 ## TO DO
 - Make a python wrapper for the colourlovers API (or similar) to get color palettes
