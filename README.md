@@ -1,6 +1,39 @@
 # Colourlovers-API-wrapper
 Python wrapper for the [API](http://www.colourlovers.com/api) provided by www.colourlovers.com
 
+## Requirements
+* PIL or Pillow
+* colorsys
+
+## How to use it
+
+### Import the wrapper
+
+1. First clone the repository by typing in a terminal: ``` git clone https://github.com/juangallostra/Colourlovers-API-wrapper.git```
+2. Start a Python terminal session in the directory where you cloned the repository
+3. Import the wrapper by: 
+	```python
+		>>> from colourlovers import CLapi
+		>>> cl = CLapi.ColourLovers()
+	```
+### Queries
+Once we have created the API wrapper object (```cl``` in the present case) we are ready to query the API. The ColourLovers API queries are structured in three levels:
+1. Object of the query. The possible query objects are: Color/s, Pattern/s, Palette/s, Lover/s or stats. Note that most of the objects can be queried in plural or in singular. The wrapper offers a different method for each object, being:
+	```python
+		>>> cl.search_palette()  # Query for a single palette
+		>>> cl.search_pattern()  # Query for a single pattern
+		>>> cl.search_color()  # Query for a single color
+		>>> cl.search_lover()  # Query for a single user
+		>>> cl.search_palettes()  # Query for multiple palettes
+		>>> cl.search_patterns()  # Query for multiple patterns
+		>>> cl.search_colors()  # Query for multiple colors
+		>>> cl.search_lovers()  # Query for multiple users
+		>>> cl.search_stats()  # Query for a single pattern
+	```
+
+2. Type of the query. The possible query types depend on the object of the query 
+
+
 ## TO DO
 - Make a python wrapper for the colourlovers API (or similar) to get color palettes
  * It consists of two modules (**_Currently working on this_**):
