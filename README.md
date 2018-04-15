@@ -38,8 +38,8 @@ Once we have created the API wrapper object (```cl``` in the present case) we ar
     We will get back to this later.
 2. Type of the query. The possible query types depend on the object of the query and are specified via the ```request``` keyword.
  
-    | Object          | Supported Types |
-    | :-------------: |:---------------:|
+    | Object          | Supported Types                                            |
+    | :-------------: | :--------------------------------------------------------: |
     | Palettes        | ```new```, ```top```, ```random``` or None                 |
     | Patterns        | ```new```, ```top```, ```random``` or None                 |
     | Colors          | ```new```, ```top```, ```random``` or None                 |
