@@ -220,6 +220,8 @@ class ColourLovers(object):
             # Validate the type of request (new, top, random, ...) taking into account the
             # type of request (pattern, palette, colour, ...) that is to be performed
             processed_request = self.__process_optional_requests(search_type, **kwargs)
+            if type(raw_data) != bool:
+                raise ValueError("Invalid parameter "+str(raw_data))
 
             if not raw_data:
                 # if user hasn't asked for the raw data of the API
@@ -276,13 +278,13 @@ class ColourLovers(object):
         """
         # First check the validity of the type of request
         if search_term not in self.__API_REQUEST_TYPE.keys():
-            raise ValueError("Unsupported search: " + search_term)
+            raise ValueError("Unsupported search " + search_term)
         # Then check the validity of the optional parameters
         elif kwargs is not None:
             # Look for invalid parameter names
             invalid_parameters = set(kwargs.keys()) - self.__API_PARAMETERS[search_term]
             if invalid_parameters:
-                raise ValueError("Unsupported search argument/s: " + ', '.join(invalid_parameters))
+                raise ValueError("Unsupported search argument/s " + ', '.join(invalid_parameters))
             # Look for invalid parameter value types
             types = [(i, type(value)) for (i, value) in enumerate(kwargs.values())]
             for parameter_type in types:
@@ -371,13 +373,13 @@ class ColourLovers(object):
 
         if self.__API_REQUEST_KEYWORD in kwargs.keys():
             if type(kwargs[self.__API_REQUEST_KEYWORD]) != str:
-                raise ValueError("Unsupported request argument type: " + str(type(kwargs[self.__API_REQUEST_KEYWORD])))
+                raise ValueError("Unsupported request argument type " + str(type(kwargs[self.__API_REQUEST_KEYWORD])))
 
             request = set({kwargs[self.__API_REQUEST_KEYWORD]})
             valid_request = bool(request.intersection(self.__API_REQUEST_TYPE[search_type]))
 
             if not valid_request:
-                raise ValueError("Unsupported request argument/s: " + kwargs[self.__API_REQUEST_KEYWORD])
+                raise ValueError("Unsupported request argument/s " + kwargs[self.__API_REQUEST_KEYWORD])
 
             optional_request_term = self.__API_ADD_PARAM[3] + kwargs[self.__API_REQUEST_KEYWORD]
             del kwargs[self.__API_REQUEST_KEYWORD]
