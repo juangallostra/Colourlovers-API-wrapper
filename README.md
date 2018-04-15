@@ -30,6 +30,7 @@ Once we have created the API wrapper object (```cl``` in the present case) we ar
 		>>> cl.search_lovers()  # Query for multiple users
 		>>> cl.search_stats()  # Query for a single pattern
 	```
+    Each of these methods only accepts keyword arguments. Optionally, a first positional argument can be passed specifying whether the response of the query should be returned as raw data or as a python object. By default the responses will be returned as Python objects. Hence, a general
 
 2. Type of the query. The possible query types depend on the object of the query 
 
