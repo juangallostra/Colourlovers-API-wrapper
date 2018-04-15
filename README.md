@@ -36,7 +36,8 @@ Once we have created the API wrapper object (```cl``` in the present case) we ar
 		>>> cl.search_patterns(kwargs)  # Response will be returned as a Python object
 	```
     We will get back to this later.
-2. Type of the query. The possible query types depend on the object of the query and are specified via the ```request``` keyword. 
+2. Type of the query. The possible query types depend on the object of the query and are specified via the ```request``` keyword.
+ 
     | Object          | Supported Types |
     | :-------------: |:---------------:|
     | Palettes        | ```new```, ```top```, ```random``` or None                 |
