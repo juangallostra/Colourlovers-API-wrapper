@@ -30,13 +30,14 @@ Import the wrapper
            >>> from colourlovers import CLapi
            >>> cl = CLapi.ColourLovers()
 
-   .. rubric:: Queries
-      :name: queries
+Queries
+~~~~~~~
 
-   Once we have created the API wrapper object (``cl`` in the present
-   case) we are ready to query the API. The ColourLovers API queries are
-   structured in three levels:
-4. Object of the query. The possible query objects are: Color/s,
+Once we have created the API wrapper object (``cl`` in the present
+case) we are ready to query the API. The ColourLovers API queries are
+structured in three levels:
+
+1. Object of the query. The possible query objects are: Color/s,
    Pattern/s, Palette/s, Lover/s or stats. Note that most of the objects
    can be queried in plural or in singular. The wrapper offers a
    different method for each object, all of them being:
@@ -66,7 +67,7 @@ Import the wrapper
 
    We will get back to this later.
 
-5. Type of the query. These are general, non-object dependent types and
+2. Type of the query. These are general, non-object dependent types and
    are specified via the ``request`` keyword. However, not all the types
    are supported by all the objects. The possible query types for each
    type of object are:
@@ -106,7 +107,7 @@ Import the wrapper
            >>> cl.search_lover(username='whatever')
            >>> cl.search_color(hexvalue='C6C5AC')
 
-6. Object specific query parameters. These depend on the object of the
+3. Object specific query parameters. These depend on the object of the
    query and are also specified as keyword arguments. To see which are
    the parameters supported by each object follow the links to the
    official API page in the following table. Note the differences in the
