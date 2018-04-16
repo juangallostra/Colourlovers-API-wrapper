@@ -25,7 +25,16 @@ class ColourLovers(object):
 
         self.__API_URL = "http://www.colourlovers.com/api/"
         # When searching for new, top or random use the request keyword in the called search method
-        self.__API_REQUEST_KEYWORD = "request"
+        self.__API_REQUEST_KEYWORDS = {
+            "palettes": "request",
+            "patterns": "request",
+            "colors": "request",
+            "stats": "request",
+            "color": "hexvalue",
+            "palette": "id",
+            "pattern": "id",
+            "lover": "username",
+        }
         self.__API_EXCLUSIVE_REQUEST = "random"
         self.__API_REQUEST_TYPE = {
             "colors": set(
@@ -173,6 +182,12 @@ class ColourLovers(object):
         self.__API_PALETTE = "palette"
         self.__API_PATTERN = "pattern"
         self.__API_LOVER = "lover"
+        self.__ALLOW_FLEXIBLE_REQUEST = [
+            "color",
+            "palette",
+            "lover",
+            "pattern",
+        ]
         # Public methods
         self.search_colors = self.__public_api_method(self.__API_COLORS, Color)
         self.search_color = self.__public_api_method(self.__API_COLOR, Color)
@@ -370,22 +385,28 @@ class ColourLovers(object):
         """
         processed_request = collections.namedtuple('Processed_request', ['kwargs', 'optional_request'])
         optional_request_term = None
+        # Only process optional request if it is present in the keywords
+        valid_keyword = self.__API_REQUEST_KEYWORDS[search_type] or None
+        if valid_keyword in kwargs.keys():
+            if type(kwargs[valid_keyword]) not in [str, int]:
+                raise ValueError("Unsupported request argument type " + str(type(kwargs[valid_keyword])))
 
-        if self.__API_REQUEST_KEYWORD in kwargs.keys():
-            if type(kwargs[self.__API_REQUEST_KEYWORD]) != str:
-                raise ValueError("Unsupported request argument type " + str(type(kwargs[self.__API_REQUEST_KEYWORD])))
+            if not self.__validate_optional_request(search_type, kwargs[valid_keyword]):
+                raise ValueError("Unsupported request argument/s " + kwargs[valid_keyword])
 
-            request = set({kwargs[self.__API_REQUEST_KEYWORD]})
-            valid_request = bool(request.intersection(self.__API_REQUEST_TYPE[search_type]))
-
-            if not valid_request:
-                raise ValueError("Unsupported request argument/s " + kwargs[self.__API_REQUEST_KEYWORD])
-
-            optional_request_term = self.__API_ADD_PARAM[3] + kwargs[self.__API_REQUEST_KEYWORD]
-            del kwargs[self.__API_REQUEST_KEYWORD]
+            optional_request_term = self.__API_ADD_PARAM[3] + str(kwargs[valid_keyword])
             # if the optional request is random/the search is for stats
             # then ignore the rest of arguments since they are not allowed
-            if self.__API_EXCLUSIVE_REQUEST in request or search_type == self.__API_STATS:
+            if self.__API_EXCLUSIVE_REQUEST == kwargs[valid_keyword] or search_type == self.__API_STATS:
                 kwargs = {}
+            del kwargs[valid_keyword]
 
         return processed_request(kwargs=kwargs, optional_request=optional_request_term)
+
+    def __validate_optional_request(self, search_type, request_value):
+            request = set({request_value})
+            if bool(request.intersection(self.__API_REQUEST_TYPE[search_type])):
+                return True
+            elif search_type in self.__ALLOW_FLEXIBLE_REQUEST:
+                return True
+            return False
