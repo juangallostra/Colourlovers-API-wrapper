@@ -1,9 +1,11 @@
 from setuptools import setup
 
+version = '0.1.3'
+
 setup(
     name='colourlovers',
     packages=['colourlovers'], # this must be the same as the name above
-    version='0.1.2',
+    version=version,
     description='A python wrapper for ColourLovers API',
     long_description='\n\n'.join([
         open('README.rst').read(), open('CHANGES.rst').read()]),
@@ -11,7 +13,7 @@ setup(
     author_email='juangallostra@gmail.com',
     license='MIT',
     url='https://github.com/juangallostra/Colourlovers-API-wrapper', # use the URL to the github repo
-    download_url='https://github.com/juangallostra/Colourlovers-API-wrapper/archive/0.1.2.tar.gz', # I'll explain this in a second
+    download_url='https://github.com/juangallostra/Colourlovers-API-wrapper/archive/'+version+'.tar.gz', # I'll explain this in a second
     keywords=['color', 'colour', 'palette', 'api', 'colourlovers', 'wrapper'],
     classifiers=[
         'Development Status :: 3 - Alpha',
