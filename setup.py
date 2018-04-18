@@ -5,7 +5,7 @@ setup(
     packages=['colourlovers'], # this must be the same as the name above
     version='0.1.2',
     description='A python wrapper for ColourLovers API',
-    long_descritpion='\n\n'.join([
+    long_description='\n\n'.join([
         open('README.rst').read(), open('CHANGES.rst').read()]),
     author='Juan Gallostra',
     author_email='juangallostra@gmail.com',
