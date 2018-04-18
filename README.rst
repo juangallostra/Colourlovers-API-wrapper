@@ -116,15 +116,15 @@ structured in three levels:
    +-------------+-------------------------------------------------------------+
    | Object      | Supported Types                                             |
    +=============+=============================================================+
-   | Palette/s   | `Parameters <https://www.colourlovers.com/api#palettes>`__   |
+   | Palette/s   | `Parameters <https://www.colourlovers.com/api#palettes>`__  |
    +-------------+-------------------------------------------------------------+
-   | Pattern/s   | `Parameters <https://www.colourlovers.com/api#patterns>`__   |
+   | Pattern/s   | `Parameters <https://www.colourlovers.com/api#patterns>`__  |
    +-------------+-------------------------------------------------------------+
-   | Color/s     | `Parameters <https://www.colourlovers.com/api#colors>`__     |
+   | Color/s     | `Parameters <https://www.colourlovers.com/api#colors>`__    |
    +-------------+-------------------------------------------------------------+
-   | Lover/s     | `Parameters <https://www.colourlovers.com/api#lovers>`__     |
+   | Lover/s     | `Parameters <https://www.colourlovers.com/api#lovers>`__    |
    +-------------+-------------------------------------------------------------+
-   | Stats       | `Parameters <https://www.colourlovers.com/api#stats>`__      |
+   | Stats       | `Parameters <https://www.colourlovers.com/api#stats>`__     |
    +-------------+-------------------------------------------------------------+
 
    Examples of valid queries are:
