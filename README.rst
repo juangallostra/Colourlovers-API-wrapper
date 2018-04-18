@@ -26,15 +26,16 @@ Import the wrapper
 
    .. code:: python
 
-           >>> from colourlovers import CLapi
-           >>> cl = CLapi.ColourLovers()
+           >>> from colourlovers import clapi
+           >>> cl = clapi.ColourLovers()
 
 Queries
 ~~~~~~~
 
 Once we have created the API wrapper object (``cl`` in the present
-case) we are ready to query the API. The ColourLovers API queries are
-structured in three levels:
+case) we are ready to query the API. Note that a query, even if it
+is for a single object, always returns a list. The ColourLovers API
+queries are structured in three levels:
 
 1. Object of the query. The possible query objects are: Color/s,
    Pattern/s, Palette/s, Lover/s or stats. Note that most of the objects
