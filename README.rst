@@ -11,7 +11,6 @@ Requirements
    wrapper <https://github.com/elbaschid/python-colourlovers>`__ if
    using Python 2)
 -  PIL or Pillow
--  colorsys
 
 How to use it
 -------------
