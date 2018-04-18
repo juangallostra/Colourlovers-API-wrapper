@@ -1,7 +1,7 @@
 Colourlovers-API-wrapper
 ========================
 
-Python wrapper for the `API <http://www.colourlovers.com/api>`__
+Python wrapper for the `API <https://www.colourlovers.com/api>`__
 provided by www.colourlovers.com
 
 Requirements
@@ -116,15 +116,15 @@ structured in three levels:
    +-------------+-------------------------------------------------------------+
    | Object      | Supported Types                                             |
    +=============+=============================================================+
-   | Palette/s   | `Parameters <http://www.colourlovers.com/api#palettes>`__   |
+   | Palette/s   | `Parameters <https://www.colourlovers.com/api#palettes>`__   |
    +-------------+-------------------------------------------------------------+
-   | Pattern/s   | `Parameters <http://www.colourlovers.com/api#patterns>`__   |
+   | Pattern/s   | `Parameters <https://www.colourlovers.com/api#patterns>`__   |
    +-------------+-------------------------------------------------------------+
-   | Color/s     | `Parameters <http://www.colourlovers.com/api#colors>`__     |
+   | Color/s     | `Parameters <https://www.colourlovers.com/api#colors>`__     |
    +-------------+-------------------------------------------------------------+
-   | Lover/s     | `Parameters <http://www.colourlovers.com/api#lovers>`__     |
+   | Lover/s     | `Parameters <https://www.colourlovers.com/api#lovers>`__     |
    +-------------+-------------------------------------------------------------+
-   | Stats       | `Parameters <http://www.colourlovers.com/api#stats>`__      |
+   | Stats       | `Parameters <https://www.colourlovers.com/api#stats>`__      |
    +-------------+-------------------------------------------------------------+
 
    Examples of valid queries are:
@@ -136,37 +136,13 @@ structured in three levels:
 
    Note that the parameters are case-sensitive and that some of them
    expect predefined values. This edge cases are all listed at the
-   `official API documentation <http://www.colourlovers.com/api>`__.
+   `official API documentation <https://www.colourlovers.com/api>`__.
 
-TO DO
------
-
--  Make a python wrapper for the colourlovers API (or similar) to get
-   color palettes
--  It consists of two modules (***Currently working on this***):
-
-   -  ``colourlovers_wrapper.py`` is in charge of making requests to the
-      the API and retrieving its responses. **It still doesn't handle
-      all the possible request that are accepted by the API**. Lack of
-      support for [STRIKEOUT:searching with parametres *new*, *top* and
-      *random* as well as] the *switches* in Color and Lover searches.)
-   -  ``colourlovers_data_containers.py`` Implements [STRIKEOUT:xml]
-      json deserializing for the API responses. ([STRIKEOUT:if finally
-      using colourlovers API]) It presents the data returned by the API
-      request as class instances of the specified search type (Colors,
-      Palettes, Patterns, Lovers or Stats). The attributes that this
-      classes have are the data fields returned by the API for that
-      concrete search type (**Work in progress**).
-
--  It would be nice to have a tool to preview and organize the selected
-   colors (The obtained classes from the search now implement a method,
-   ``draw()``, which draws the Pattern, Color or Palette it is called
-   on)
 
 Other possible sources for color palettes
 -----------------------------------------
 
-1. http://www.colr.org/api.html - (http://www.colr.org/)
-2. http://www.pictaculous.com/api/ - (http://www.pictaculous.com/)
+1. https://www.colr.org/api.html - (https://www.colr.org/)
+2. https://www.pictaculous.com/api/ - (https://www.pictaculous.com/)
 3. It is also worth mentioning
    https://github.com/elbaschid/python-colourlovers
