@@ -24,6 +24,7 @@ class CommonData(object):
 
 class HexConverter(CommonData):
     def __init__(self, json_data):
+        CommonData.__init__(self, json_data)
         self.colors = json_data["colors"]
 
     def hex_to_rgb(self):
