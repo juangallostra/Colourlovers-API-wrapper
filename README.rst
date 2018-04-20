@@ -3,6 +3,17 @@ Colourlovers-API-wrapper
 
 .. image:: https://img.shields.io/pypi/v/colourlovers.svg
     :target: https://pypi.org/project/colourlovers/
+
+.. image:: https://img.shields.io/github/issues-pr/juangallostra/Colourlovers-API-wrapper.svg?style=flat-square
+    :target: https://github.com/juangallostra/Colourlovers-API-wrapper/pulls
+
+.. image:: https://img.shields.io/github/issues/juangallostra/Colourlovers-API-wrapper.svg?style=flat-square
+    :target: https://github.com/juangallostra/Colourlovers-API-wrapper/issues
+
+.. image:: https://img.shields.io/github/contributors/juangallostra/Colourlovers-API-wrapper.svg?style=flat-square
+    :target: https://github.com/juangallostra/Colourlovers-API-wrapper
+
+
     
 
 Python wrapper for the `API <https://www.colourlovers.com/api>`__
