@@ -1,8 +1,9 @@
 Colourlovers-API-wrapper
 ========================
 
-.. image:: https://badge.fury.io/py/colourlovers.svg
-    :target: https://badge.fury.io/py/colourlovers
+.. image:: https://img.shields.io/pypi/v/colourlovers.svg
+    :target: https://crate.io/packages/colourlovers/
+    
 
 Python wrapper for the `API <https://www.colourlovers.com/api>`__
 provided by www.colourlovers.com
