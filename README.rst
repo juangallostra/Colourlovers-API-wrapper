@@ -2,7 +2,7 @@ Colourlovers-API-wrapper
 ========================
 
 .. image:: https://img.shields.io/pypi/v/colourlovers.svg
-    :target: https://crate.io/packages/colourlovers/
+    :target: https://pypi.org/project/colourlovers/
     
 
 Python wrapper for the `API <https://www.colourlovers.com/api>`__
