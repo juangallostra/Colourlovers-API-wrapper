@@ -25,7 +25,7 @@ Requirements
 -  Python 3 (Check `elbaschid's
    wrapper <https://github.com/elbaschid/python-colourlovers>`__ if
    using Python 2)
--  PIL or Pillow
+-  Pillow
 
 How to use it
 -------------
@@ -33,7 +33,9 @@ How to use it
 Import the wrapper
 ~~~~~~~~~~~~~~~~~~
 
-1. First clone the repository by typing in a terminal:
+1. Download the wrapper via ``pip``:
+   ``pip install colourlovers``
+   Alternatively, clone the repository by typing in a terminal:
    ``git clone https://github.com/juangallostra/Colourlovers-API-wrapper.git``
 2. Start a Python terminal session in the directory where you cloned the
    repository
@@ -82,32 +84,31 @@ queries are structured in three levels:
 
    We will get back to this later.
 
-2. Type of the query. These are general, non-object dependent types and
-   are specified via the ``request`` keyword. However, not all the types
-   are supported by all the objects. The possible query types for each
-   type of object are:
+2. Type of the query. These are general, normally non-object dependent types.
+   However, not all the types are supported by all the objects. The possible
+   query types and the keyword used to specify them for each type of object are:
 
-   +------------+------------------------------------------------------+
-   | Object     | Supported Types                                      |
-   +============+======================================================+
-   | Palettes   | ``new``, ``top``, ``random`` or None                 |
-   +------------+------------------------------------------------------+
-   | Patterns   | ``new``, ``top``, ``random`` or None                 |
-   +------------+------------------------------------------------------+
-   | Colors     | ``new``, ``top``, ``random`` or None                 |
-   +------------+------------------------------------------------------+
-   | Lovers     | ``new``, ``top``, or None                            |
-   +------------+------------------------------------------------------+
-   | Palette    | ``id`` or None                                       |
-   +------------+------------------------------------------------------+
-   | Pattern    | ``id`` or None                                       |
-   +------------+------------------------------------------------------+
-   | Color      | ``hexvalue`` or None                                 |
-   +------------+------------------------------------------------------+
-   | Lover      | ``username`` or None                                 |
-   +------------+------------------------------------------------------+
-   | Stats      | ``colors``, ``palettes``, ``patterns``, ``lovers``   |
-   +------------+------------------------------------------------------+
+   +------------+-------------+----------------------------------------------------+
+   | Object     |   Keyword   |               Value                                |
+   +============+=============+====================================================+
+   | Palettes   | ``request`` |  ``new``, ``top``, ``random``                      |
+   +------------+-------------+----------------------------------------------------+
+   | Patterns   | ``request`` |  ``new``, ``top``, ``random``                      |
+   +------------+-------------+----------------------------------------------------+
+   | Colors     | ``request`` |  ``new``, ``top``, ``random``                      |
+   +------------+-------------+----------------------------------------------------+
+   | Lovers     | ``request`` |  ``new``, ``top``                                  |
+   +------------+-------------+----------------------------------------------------+
+   | Palette    | ``id``      | valid id as ``int`` or ``str``                     |
+   +------------+-------------+----------------------------------------------------+
+   | Pattern    | ``id``      | valid id as ``int`` or ``str``                     |
+   +------------+-------------+----------------------------------------------------+
+   | Color      | ``hexvalue``| valid hex color value as ``str``                   |
+   +------------+-------------+----------------------------------------------------+
+   | Lover      | ``username``| valid username ``str``                             |
+   +------------+-------------+----------------------------------------------------+
+   | Stats      | ``request`` | ``colors``, ``palettes``, ``patterns``, ``lovers`` |   |
+   +------------+------------------------------------------------------------------+
 
    The ``random`` query type is exclusive. When using it, no other
    parameters can be specified. Some examples of valid queries are:
