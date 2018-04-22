@@ -151,7 +151,7 @@ queries are structured in three levels:
 
    .. code:: python
 
-           >>> cl.search_palettes(request='top', keywords='river', numresults=15)
+           >>> cl.search_palettes(request='top', keywords='river', numResults=15)
            >>> cl.search_lovers(request='new', orderCol='numVotes')
 
    Note that the parameters are case-sensitive and that some of them
@@ -176,14 +176,29 @@ set to ``True``. This is so because the default raw data response format is XML.
 
 To get the data in JSON format, a part from specifying that the response should be returned
 as raw data by setting the first positional argument to ``True``, it is necessary to include
-another keyword parameter in the query spacifying that the format of the response should be
+another keyword parameter in the query specifying that the format of the response should be
 JSON (``format='json'``).
 
    .. code:: python
 
            >>> resp = cl.search_palette(True, id=2323, format='json')
            >>> resp
-           '[{"id":2323,"title":"On the lake","userName":"viatora","numViews":529,"numVotes":12,"numComments":3,"numHearts":0,"rank":0,"dateCreated":"2005-08-24 10:44:11","colors":["E6F0F7","97A4B2","5F0609","766F59","989383"],"description":"I-MOO\\r\\n<div style=\\"width: 300px; text-align: center;\\"><a href=\\"http:\\/\\/www.colourlovers.com\\/contests\\/moo\\/minicard\\/2291466\\" target=\\"_blank\\" style=\\"display: block; margin-bottom: 5px; width: 300px; height: 120px; -moz-box-shadow: 0 1px 4px #d1d1d1; -webkit-box-shadow: 0 1px 4px #d1d1d1; box-shadow: 0 1px 4px #d1d1d1; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=180, Color=","url":"http:\\/\\/www.colourlovers.com\\/palette\\/2323\\/On_the_lake","imageUrl":"http:\\/\\/www.colourlovers.com\\/paletteImg\\/E6F0F7\\/97A4B2\\/5F0609\\/766F59\\/989383\\/On_the_lake.png","badgeUrl":"http:\\/\\/www.colourlovers.com\\/images\\/badges\\/p\\/2\\/2323_On_the_lake.png","apiUrl":"http:\\/\\/www.colourlovers.com\\/api\\/palette\\/2323"}]'
+           '[{"id":2323,
+              "title":"On the lake",
+              "userName":"viatora",
+              "numViews":529,
+              "numVotes":12,
+              "numComments":3,
+              "numHearts":0,
+              "rank":0,
+              "dateCreated":
+              "2005-08-24 10:44:11",
+              "colors":["E6F0F7","97A4B2","5F0609","766F59","989383"],
+              "description":"I-MOO\\r\\n<div style=\\"width: 300px; text-align: center;\\"><a href=\\"http:\\/\\/www.colourlovers.com\\/contests\\/moo\\/minicard\\/2291466\\" target=\\"_blank\\" style=\\"display: block; margin-bottom: 5px; width: 300px; height: 120px; -moz-box-shadow: 0 1px 4px #d1d1d1; -webkit-box-shadow: 0 1px 4px #d1d1d1; box-shadow: 0 1px 4px #d1d1d1; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=180, Color=",
+              "url":"http:\\/\\/www.colourlovers.com\\/palette\\/2323\\/On_the_lake",
+              "imageUrl":"http:\\/\\/www.colourlovers.com\\/paletteImg\\/E6F0F7\\/97A4B2\\/5F0609\\/766F59\\/989383\\/On_the_lake.png",
+              "badgeUrl":"http:\\/\\/www.colourlovers.com\\/images\\/badges\\/p\\/2\\/2323_On_the_lake.png",
+              "apiUrl":"http:\\/\\/www.colourlovers.com\\/api\\/palette\\/2323"}]'
 
 Finally, if the parameter raw data is not set or set to ``False`` then the data will be obtained
 as a Python object (which is the recommended way). If the response of a query contains more than
@@ -199,7 +214,26 @@ a single object.
            [<colourlovers.data_containers.Palette object at 0x7fc64a87f0f0>]
            >>> resp =  cl.search_palettes(request='top', keywords='river')
            >>> resp
-           [<colourlovers.data_containers.Palette object at 0x7fc64a569ef0>, <colourlovers.data_containers.Palette object at 0x7fc64a569f28>, <colourlovers.data_containers.Palette object at 0x7fc64a569f60>, <colourlovers.data_containers.Palette object at 0x7fc64a569f98>, <colourlovers.data_containers.Palette object at 0x7fc64a569fd0>, <colourlovers.data_containers.Palette object at 0x7fc64a562048>, <colourlovers.data_containers.Palette object at 0x7fc64a562080>, <colourlovers.data_containers.Palette object at 0x7fc64a5620b8>, <colourlovers.data_containers.Palette object at 0x7fc64a5620f0>, <colourlovers.data_containers.Palette object at 0x7fc64a562128>, <colourlovers.data_containers.Palette object at 0x7fc64a562160>, <colourlovers.data_containers.Palette object at 0x7fc64a562198>, <colourlovers.data_containers.Palette object at 0x7fc64a5621d0>, <colourlovers.data_containers.Palette object at 0x7fc64a562208>, <colourlovers.data_containers.Palette object at 0x7fc64a562240>, <colourlovers.data_containers.Palette object at 0x7fc64a562278>, <colourlovers.data_containers.Palette object at 0x7fc64a5622b0>, <colourlovers.data_containers.Palette object at 0x7fc64a5622e8>, <colourlovers.data_containers.Palette object at 0x7fc64a562320>, <colourlovers.data_containers.Palette object at 0x7fc64a562358>]
+           [<colourlovers.data_containers.Palette object at 0x7fc64a569ef0>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a569f28>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a569f60>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a569f98>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a569fd0>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562048>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562080>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a5620b8>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a5620f0>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562128>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562160>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562198>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a5621d0>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562208>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562240>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562278>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a5622b0>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a5622e8>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562320>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562358>]
 
 
 
