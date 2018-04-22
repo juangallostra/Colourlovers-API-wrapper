@@ -19,6 +19,7 @@ Colourlovers-API-wrapper
 Python wrapper for the `API <https://www.colourlovers.com/api>`__
 provided by www.colourlovers.com
 
+
 Requirements
 ------------
 
@@ -26,6 +27,7 @@ Requirements
    wrapper <https://github.com/elbaschid/python-colourlovers>`__ if
    using Python 2)
 -  Pillow
+
 
 How to use it
 -------------
@@ -45,6 +47,7 @@ Import the wrapper
 
            >>> from colourlovers import clapi
            >>> cl = clapi.ColourLovers()
+
 
 Queries
 ~~~~~~~
@@ -154,6 +157,49 @@ queries are structured in three levels:
    Note that the parameters are case-sensitive and that some of them
    expect predefined values. This edge cases are all listed at the
    `official API documentation <https://www.colourlovers.com/api>`__.
+
+
+Response data
+~~~~~~~~~~~~~
+
+The data from a query can be returned in three different formats: XML, JSON or as
+a Python object.
+
+To get the data in XML format a first positional argument (``raw_data``) has to be
+set to ``True``. This is so because the default raw data response format is XML.
+
+   .. code:: python
+
+           >>> resp = cl.search_palette(True, id=2323)
+           >>> resp
+           '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<palettes numResults="1" totalResults="4567661">\n\t<palette>\n\t\t<id>2323</id>\n\t\t<title><![CDATA[On the lake]]></title>\n\t\t<userName><![CDATA[viatora]]></userName>\n\t\t<numViews>529</numViews>\n\t\t<numVotes>12</numVotes>\n\t\t<numComments>3</numComments>\n\t\t<numHearts>0</numHearts>\n\t\t<rank>0</rank>\n\t\t<dateCreated>2005-08-24 10:44:11</dateCreated>\n\t\t<colors>\n\t\t\t<hex>E6F0F7</hex>\n\t\t\t<hex>97A4B2</hex>\n\t\t\t<hex>5F0609</hex>\n\t\t\t<hex>766F59</hex>\n\t\t\t<hex>989383</hex>\n\t\t</colors>\n\t\t<description><![CDATA[I-MOO\r\n<div style="width: 300px; text-align: center;"><a href="http://www.colourlovers.com/contests/moo/minicard/2291466" target="_blank" style="display: block; margin-bottom: 5px; width: 300px; height: 120px; -moz-box-shadow: 0 1px 4px #d1d1d1; -webkit-box-shadow: 0 1px 4px #d1d1d1; box-shadow: 0 1px 4px #d1d1d1; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=180, Color=]]></description>\n\t\t<url><![CDATA[http://www.colourlovers.com/palette/2323/On_the_lake]]></url>\n\t\t<imageUrl><![CDATA[http://www.colourlovers.com/paletteImg/E6F0F7/97A4B2/5F0609/766F59/989383/On_the_lake.png]]></imageUrl>\n\t\t<badgeUrl><![CDATA[http://www.colourlovers.com/images/badges/p/2/2323_On_the_lake.png]]></badgeUrl>\n\t\t<apiUrl>http://www.colourlovers.com/api/palette/2323</apiUrl>\n\t</palette>\n</palettes>'
+           >>> resp =  cl.search_palettes(request='top', keywords='river')
+           >>> resp
+           [<colourlovers.data_containers.Palette object at 0x7fc64a569ef0>, <colourlovers.data_containers.Palette object at 0x7fc64a569f28>, <colourlovers.data_containers.Palette object at 0x7fc64a569f60>, <colourlovers.data_containers.Palette object at 0x7fc64a569f98>, <colourlovers.data_containers.Palette object at 0x7fc64a569fd0>, <colourlovers.data_containers.Palette object at 0x7fc64a562048>, <colourlovers.data_containers.Palette object at 0x7fc64a562080>, <colourlovers.data_containers.Palette object at 0x7fc64a5620b8>, <colourlovers.data_containers.Palette object at 0x7fc64a5620f0>, <colourlovers.data_containers.Palette object at 0x7fc64a562128>, <colourlovers.data_containers.Palette object at 0x7fc64a562160>, <colourlovers.data_containers.Palette object at 0x7fc64a562198>, <colourlovers.data_containers.Palette object at 0x7fc64a5621d0>, <colourlovers.data_containers.Palette object at 0x7fc64a562208>, <colourlovers.data_containers.Palette object at 0x7fc64a562240>, <colourlovers.data_containers.Palette object at 0x7fc64a562278>, <colourlovers.data_containers.Palette object at 0x7fc64a5622b0>, <colourlovers.data_containers.Palette object at 0x7fc64a5622e8>, <colourlovers.data_containers.Palette object at 0x7fc64a562320>, <colourlovers.data_containers.Palette object at 0x7fc64a562358>]
+
+To get the data in JSON format, a part from specifying that the response should be returned
+as raw data by setting the first positional argument to ``True``, it is necessary to include
+another keyword parameter in the query spacifying that the format of the response should be
+JSON (``format='json'``).
+
+   .. code:: python
+
+           >>> resp = cl.search_palette(True, id=2323, format='json')
+           >>> resp
+           '[{"id":2323,"title":"On the lake","userName":"viatora","numViews":529,"numVotes":12,"numComments":3,"numHearts":0,"rank":0,"dateCreated":"2005-08-24 10:44:11","colors":["E6F0F7","97A4B2","5F0609","766F59","989383"],"description":"I-MOO\\r\\n<div style=\\"width: 300px; text-align: center;\\"><a href=\\"http:\\/\\/www.colourlovers.com\\/contests\\/moo\\/minicard\\/2291466\\" target=\\"_blank\\" style=\\"display: block; margin-bottom: 5px; width: 300px; height: 120px; -moz-box-shadow: 0 1px 4px #d1d1d1; -webkit-box-shadow: 0 1px 4px #d1d1d1; box-shadow: 0 1px 4px #d1d1d1; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=180, Color=","url":"http:\\/\\/www.colourlovers.com\\/palette\\/2323\\/On_the_lake","imageUrl":"http:\\/\\/www.colourlovers.com\\/paletteImg\\/E6F0F7\\/97A4B2\\/5F0609\\/766F59\\/989383\\/On_the_lake.png","badgeUrl":"http:\\/\\/www.colourlovers.com\\/images\\/badges\\/p\\/2\\/2323_On_the_lake.png","apiUrl":"http:\\/\\/www.colourlovers.com\\/api\\/palette\\/2323"}]'
+
+Finally, if the parameter raw data is not set or set to ``False`` then the data will be obtained
+as a Python object (which is the recommended way). If the response of a query contains more than
+one object - for example, when querying for palettes - then each object in the response will be
+mapped to a Python object. Finally, when the response data is obtained as Python objects it will
+always come inside of a list for consistency reasons among methods, even if the response contains
+a single object.
+
+   .. code:: python
+
+           >>> resp = cl.search_palette(id=2323)
+           >>> resp
+           [<colourlovers.data_containers.Palette object at 0x7fc64a87f0f0>]
 
 
 Other possible sources for color palettes
