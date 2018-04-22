@@ -183,7 +183,9 @@ JSON (``format='json'``).
 
            >>> resp = cl.search_palette(True, id=2323, format='json')
            >>> resp
-           '[{"id":2323,
+           '[
+             {
+              "id":2323,
               "title":"On the lake",
               "userName":"viatora",
               "numViews":529,
@@ -191,14 +193,15 @@ JSON (``format='json'``).
               "numComments":3,
               "numHearts":0,
               "rank":0,
-              "dateCreated":
-              "2005-08-24 10:44:11",
+              "dateCreated":"2005-08-24 10:44:11",
               "colors":["E6F0F7","97A4B2","5F0609","766F59","989383"],
               "description":"I-MOO\\r\\n<div style=\\"width: 300px; text-align: center;\\"><a href=\\"http:\\/\\/www.colourlovers.com\\/contests\\/moo\\/minicard\\/2291466\\" target=\\"_blank\\" style=\\"display: block; margin-bottom: 5px; width: 300px; height: 120px; -moz-box-shadow: 0 1px 4px #d1d1d1; -webkit-box-shadow: 0 1px 4px #d1d1d1; box-shadow: 0 1px 4px #d1d1d1; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=180, Color=",
               "url":"http:\\/\\/www.colourlovers.com\\/palette\\/2323\\/On_the_lake",
               "imageUrl":"http:\\/\\/www.colourlovers.com\\/paletteImg\\/E6F0F7\\/97A4B2\\/5F0609\\/766F59\\/989383\\/On_the_lake.png",
               "badgeUrl":"http:\\/\\/www.colourlovers.com\\/images\\/badges\\/p\\/2\\/2323_On_the_lake.png",
-              "apiUrl":"http:\\/\\/www.colourlovers.com\\/api\\/palette\\/2323"}]'
+              "apiUrl":"http:\\/\\/www.colourlovers.com\\/api\\/palette\\/2323"
+             }
+            ]'
 
 Finally, if the parameter raw data is not set or set to ``False`` then the data will be obtained
 as a Python object (which is the recommended way). If the response of a query contains more than
@@ -235,6 +238,45 @@ a single object.
             <colourlovers.data_containers.Palette object at 0x7fc64a562320>,
             <colourlovers.data_containers.Palette object at 0x7fc64a562358>]
 
+
+Each of this objects (Lover, Palette, Pattern, Color, Stats) provides an attribute - named following PEP8
+style guidelines - for each of the fields present in the response. Refer to the `official API documentation <https://www.colourlovers.com/api>`__
+to see which fields (Example Result sections) are present for each object. As an example:
+
+   .. code:: python
+
+           >>> p = cl.search_pattern(id=2323)
+           >>> p
+           [<colourlovers.data_containers.Pattern object at 0x7fcf64ae4a20>]
+           >>> vars(p[0])
+           {
+               'id': 2323,
+               'title': 'inspiration',
+               'username': 'daisyjean911',
+               'num_views': 328,
+               'num_votes': 0,
+               'num_comments': 0,
+               'num_hearts': 0,
+               'rank': 0,
+               'date_created': '2007-12-10 12:19:14',
+               'description': '<a href="http://www.colourlovers.com/palette/2285499/Nestled" target="_blank"><img src="http://www.colourlovers.com/images/badges/pw/2285/2285499_Nestled.png" style="width: 240px; height: 120px; border: 0 none;" alt="Nestled" /></a>\r\n<div style="width: 300px; text-align: center;"><a href="http://www.colourlovers.com/contests/moo/minicard/2285499" target="_blank" style="display: block; margin-bottom: 5px; width: 300px; height: 120px; -moz-box-shadow: 0 1px 4px #d1d1d1; -webkit-box-shadow: 0 1px 4px #d1d1d1; box-shadow: 0 1px 4px #d1d1d1; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=180, Color=',
+               'url': 'http://www.colourlovers.com/pattern/2323/inspiration',
+               'image_url': 'http://colourlovers.com.s3.amazonaws.com/images/patterns/2/2323.png',
+               'badge_url': 'http://www.colourlovers.com/images/badges/n/2/2323_inspiration.png',
+               'api_url': 'http://www.colourlovers.com/api/pattern/2323',
+               'colors': ['97BEC9', 'AB2B91', '76A379', 'ABD66B'],
+               'rgb_colors': [(151, 190, 201), (171, 43, 145), (118, 163, 121), (171, 214, 107)],
+               'num_colors': 4
+           }
+           >>> pattern = p[0]
+           >>> pattern.username
+           'daisyjean911'
+           >>> pattern.colors
+           ['97BEC9', 'AB2B91', '76A379', 'ABD66B']
+           >>> pattern.num_views
+           328
+           >>> pattern.id
+           2323
 
 
 Other possible sources for color palettes
