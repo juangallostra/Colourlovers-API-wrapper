@@ -110,8 +110,8 @@ queries are structured in three levels:
    +------------+-------------+----------------------------------------------------+
    | Lover      | ``username``| valid username ``str``                             |
    +------------+-------------+----------------------------------------------------+
-   | Stats      | ``request`` | ``colors``, ``palettes``, ``patterns``, ``lovers`` |   |
-   +------------+------------------------------------------------------------------+
+   | Stats      | ``request`` | ``colors``, ``palettes``, ``patterns``, ``lovers`` |
+   +------------+-------------+----------------------------------------------------+
 
    The ``random`` query type is exclusive. When using it, no other
    parameters can be specified. Some examples of valid queries are:
