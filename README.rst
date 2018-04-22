@@ -1,8 +1,24 @@
 Colourlovers-API-wrapper
 ========================
 
+.. image:: https://img.shields.io/pypi/v/colourlovers.svg
+    :target: https://pypi.org/project/colourlovers/
+
+.. image:: https://img.shields.io/github/issues-pr/juangallostra/Colourlovers-API-wrapper.svg?style=flat-square
+    :target: https://github.com/juangallostra/Colourlovers-API-wrapper/pulls
+
+.. image:: https://img.shields.io/github/issues/juangallostra/Colourlovers-API-wrapper.svg?style=flat-square
+    :target: https://github.com/juangallostra/Colourlovers-API-wrapper/issues
+
+.. image:: https://img.shields.io/github/contributors/juangallostra/Colourlovers-API-wrapper.svg?style=flat-square
+    :target: https://github.com/juangallostra/Colourlovers-API-wrapper
+
+
+    
+
 Python wrapper for the `API <https://www.colourlovers.com/api>`__
 provided by www.colourlovers.com
+
 
 Requirements
 ------------
@@ -10,7 +26,8 @@ Requirements
 -  Python 3 (Check `elbaschid's
    wrapper <https://github.com/elbaschid/python-colourlovers>`__ if
    using Python 2)
--  PIL or Pillow
+-  Pillow
+
 
 How to use it
 -------------
@@ -18,7 +35,9 @@ How to use it
 Import the wrapper
 ~~~~~~~~~~~~~~~~~~
 
-1. First clone the repository by typing in a terminal:
+1. Download the wrapper via ``pip``:
+   ``pip install colourlovers``
+   Alternatively, clone the repository by typing in a terminal:
    ``git clone https://github.com/juangallostra/Colourlovers-API-wrapper.git``
 2. Start a Python terminal session in the directory where you cloned the
    repository
@@ -28,6 +47,7 @@ Import the wrapper
 
            >>> from colourlovers import clapi
            >>> cl = clapi.ColourLovers()
+
 
 Queries
 ~~~~~~~
@@ -67,32 +87,31 @@ queries are structured in three levels:
 
    We will get back to this later.
 
-2. Type of the query. These are general, non-object dependent types and
-   are specified via the ``request`` keyword. However, not all the types
-   are supported by all the objects. The possible query types for each
-   type of object are:
+2. Type of the query. These are general, normally non-object dependent types.
+   However, not all the types are supported by all the objects. The possible
+   query types and the keyword used to specify them for each type of object are:
 
-   +------------+------------------------------------------------------+
-   | Object     | Supported Types                                      |
-   +============+======================================================+
-   | Palettes   | ``new``, ``top``, ``random`` or None                 |
-   +------------+------------------------------------------------------+
-   | Patterns   | ``new``, ``top``, ``random`` or None                 |
-   +------------+------------------------------------------------------+
-   | Colors     | ``new``, ``top``, ``random`` or None                 |
-   +------------+------------------------------------------------------+
-   | Lovers     | ``new``, ``top``, or None                            |
-   +------------+------------------------------------------------------+
-   | Palette    | ``id`` or None                                       |
-   +------------+------------------------------------------------------+
-   | Pattern    | ``id`` or None                                       |
-   +------------+------------------------------------------------------+
-   | Color      | ``hexvalue`` or None                                 |
-   +------------+------------------------------------------------------+
-   | Lover      | ``username`` or None                                 |
-   +------------+------------------------------------------------------+
-   | Stats      | ``colors``, ``palettes``, ``patterns``, ``lovers``   |
-   +------------+------------------------------------------------------+
+   +------------+-------------+----------------------------------------------------+
+   | Object     |   Keyword   |               Value                                |
+   +============+=============+====================================================+
+   | Palettes   | ``request`` |  ``new``, ``top``, ``random``                      |
+   +------------+-------------+----------------------------------------------------+
+   | Patterns   | ``request`` |  ``new``, ``top``, ``random``                      |
+   +------------+-------------+----------------------------------------------------+
+   | Colors     | ``request`` |  ``new``, ``top``, ``random``                      |
+   +------------+-------------+----------------------------------------------------+
+   | Lovers     | ``request`` |  ``new``, ``top``                                  |
+   +------------+-------------+----------------------------------------------------+
+   | Palette    | ``id``      | valid id as ``int`` or ``str``                     |
+   +------------+-------------+----------------------------------------------------+
+   | Pattern    | ``id``      | valid id as ``int`` or ``str``                     |
+   +------------+-------------+----------------------------------------------------+
+   | Color      | ``hexvalue``| valid hex color value as ``str``                   |
+   +------------+-------------+----------------------------------------------------+
+   | Lover      | ``username``| valid username ``str``                             |
+   +------------+-------------+----------------------------------------------------+
+   | Stats      | ``request`` | ``colors``, ``palettes``, ``patterns``, ``lovers`` |
+   +------------+-------------+----------------------------------------------------+
 
    The ``random`` query type is exclusive. When using it, no other
    parameters can be specified. Some examples of valid queries are:
@@ -132,12 +151,132 @@ queries are structured in three levels:
 
    .. code:: python
 
-           >>> cl.search_palettes(request='top', keywords='river', numresults=15)
+           >>> cl.search_palettes(request='top', keywords='river', numResults=15)
            >>> cl.search_lovers(request='new', orderCol='numVotes')
 
    Note that the parameters are case-sensitive and that some of them
    expect predefined values. This edge cases are all listed at the
    `official API documentation <https://www.colourlovers.com/api>`__.
+
+
+Response data
+~~~~~~~~~~~~~
+
+The data from a query can be returned in three different formats: XML, JSON or as
+a Python object.
+
+To get the data in XML format a first positional argument (``raw_data``) has to be
+set to ``True``. This is so because the default raw data response format is XML.
+
+   .. code:: python
+
+           >>> resp = cl.search_palette(True, id=2323)
+           >>> resp
+           '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<palettes numResults="1" totalResults="4567661">\n\t<palette>\n\t\t<id>2323</id>\n\t\t<title><![CDATA[On the lake]]></title>\n\t\t<userName><![CDATA[viatora]]></userName>\n\t\t<numViews>529</numViews>\n\t\t<numVotes>12</numVotes>\n\t\t<numComments>3</numComments>\n\t\t<numHearts>0</numHearts>\n\t\t<rank>0</rank>\n\t\t<dateCreated>2005-08-24 10:44:11</dateCreated>\n\t\t<colors>\n\t\t\t<hex>E6F0F7</hex>\n\t\t\t<hex>97A4B2</hex>\n\t\t\t<hex>5F0609</hex>\n\t\t\t<hex>766F59</hex>\n\t\t\t<hex>989383</hex>\n\t\t</colors>\n\t\t<description><![CDATA[I-MOO\r\n<div style="width: 300px; text-align: center;"><a href="http://www.colourlovers.com/contests/moo/minicard/2291466" target="_blank" style="display: block; margin-bottom: 5px; width: 300px; height: 120px; -moz-box-shadow: 0 1px 4px #d1d1d1; -webkit-box-shadow: 0 1px 4px #d1d1d1; box-shadow: 0 1px 4px #d1d1d1; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=180, Color=]]></description>\n\t\t<url><![CDATA[http://www.colourlovers.com/palette/2323/On_the_lake]]></url>\n\t\t<imageUrl><![CDATA[http://www.colourlovers.com/paletteImg/E6F0F7/97A4B2/5F0609/766F59/989383/On_the_lake.png]]></imageUrl>\n\t\t<badgeUrl><![CDATA[http://www.colourlovers.com/images/badges/p/2/2323_On_the_lake.png]]></badgeUrl>\n\t\t<apiUrl>http://www.colourlovers.com/api/palette/2323</apiUrl>\n\t</palette>\n</palettes>'
+
+To get the data in JSON format, a part from specifying that the response should be returned
+as raw data by setting the first positional argument to ``True``, it is necessary to include
+another keyword parameter in the query specifying that the format of the response should be
+JSON (``format='json'``).
+
+   .. code:: python
+
+           >>> resp = cl.search_palette(True, id=2323, format='json')
+           >>> resp
+           '[
+             {
+              "id":2323,
+              "title":"On the lake",
+              "userName":"viatora",
+              "numViews":529,
+              "numVotes":12,
+              "numComments":3,
+              "numHearts":0,
+              "rank":0,
+              "dateCreated":"2005-08-24 10:44:11",
+              "colors":["E6F0F7","97A4B2","5F0609","766F59","989383"],
+              "description":"I-MOO\\r\\n<div style=\\"width: 300px; text-align: center;\\"><a href=\\"http:\\/\\/www.colourlovers.com\\/contests\\/moo\\/minicard\\/2291466\\" target=\\"_blank\\" style=\\"display: block; margin-bottom: 5px; width: 300px; height: 120px; -moz-box-shadow: 0 1px 4px #d1d1d1; -webkit-box-shadow: 0 1px 4px #d1d1d1; box-shadow: 0 1px 4px #d1d1d1; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=180, Color=",
+              "url":"http:\\/\\/www.colourlovers.com\\/palette\\/2323\\/On_the_lake",
+              "imageUrl":"http:\\/\\/www.colourlovers.com\\/paletteImg\\/E6F0F7\\/97A4B2\\/5F0609\\/766F59\\/989383\\/On_the_lake.png",
+              "badgeUrl":"http:\\/\\/www.colourlovers.com\\/images\\/badges\\/p\\/2\\/2323_On_the_lake.png",
+              "apiUrl":"http:\\/\\/www.colourlovers.com\\/api\\/palette\\/2323"
+             }
+            ]'
+
+Finally, if the parameter raw data is not set or set to ``False`` then the data will be obtained
+as a Python object (which is the recommended way). If the response of a query contains more than
+one object - for example, when querying for palettes - then each object in the response will be
+mapped to a Python object. Finally, when the response data is obtained as Python objects it will
+always come inside of a list for consistency reasons among methods, even if the response contains
+a single object.
+
+   .. code:: python
+
+           >>> resp = cl.search_palette(id=2323)
+           >>> resp
+           [<colourlovers.data_containers.Palette object at 0x7fc64a87f0f0>]
+           >>> resp =  cl.search_palettes(request='top', keywords='river')
+           >>> resp
+           [<colourlovers.data_containers.Palette object at 0x7fc64a569ef0>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a569f28>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a569f60>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a569f98>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a569fd0>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562048>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562080>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a5620b8>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a5620f0>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562128>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562160>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562198>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a5621d0>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562208>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562240>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562278>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a5622b0>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a5622e8>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562320>,
+            <colourlovers.data_containers.Palette object at 0x7fc64a562358>]
+
+
+Each of this objects (Lover, Palette, Pattern, Color, Stats) provides an attribute - named following PEP8
+style guidelines - for each of the fields present in the response. Refer to the `official API documentation <https://www.colourlovers.com/api>`__
+to see which fields (Example Result sections) are present for each object. As an example:
+
+   .. code:: python
+
+           >>> p = cl.search_pattern(id=2323)
+           >>> p
+           [<colourlovers.data_containers.Pattern object at 0x7fcf64ae4a20>]
+           >>> vars(p[0])
+           {
+               'id': 2323,
+               'title': 'inspiration',
+               'username': 'daisyjean911',
+               'num_views': 328,
+               'num_votes': 0,
+               'num_comments': 0,
+               'num_hearts': 0,
+               'rank': 0,
+               'date_created': '2007-12-10 12:19:14',
+               'description': '<a href="http://www.colourlovers.com/palette/2285499/Nestled" target="_blank"><img src="http://www.colourlovers.com/images/badges/pw/2285/2285499_Nestled.png" style="width: 240px; height: 120px; border: 0 none;" alt="Nestled" /></a>\r\n<div style="width: 300px; text-align: center;"><a href="http://www.colourlovers.com/contests/moo/minicard/2285499" target="_blank" style="display: block; margin-bottom: 5px; width: 300px; height: 120px; -moz-box-shadow: 0 1px 4px #d1d1d1; -webkit-box-shadow: 0 1px 4px #d1d1d1; box-shadow: 0 1px 4px #d1d1d1; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=180, Color=',
+               'url': 'http://www.colourlovers.com/pattern/2323/inspiration',
+               'image_url': 'http://colourlovers.com.s3.amazonaws.com/images/patterns/2/2323.png',
+               'badge_url': 'http://www.colourlovers.com/images/badges/n/2/2323_inspiration.png',
+               'api_url': 'http://www.colourlovers.com/api/pattern/2323',
+               'colors': ['97BEC9', 'AB2B91', '76A379', 'ABD66B'],
+               'rgb_colors': [(151, 190, 201), (171, 43, 145), (118, 163, 121), (171, 214, 107)],
+               'num_colors': 4
+           }
+           >>> pattern = p[0]
+           >>> pattern.username
+           'daisyjean911'
+           >>> pattern.colors
+           ['97BEC9', 'AB2B91', '76A379', 'ABD66B']
+           >>> pattern.num_views
+           328
+           >>> pattern.id
+           2323
 
 
 Other possible sources for color palettes
