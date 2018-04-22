@@ -13,6 +13,7 @@ Alpha version (unreleased)
 - #22 Support search by id when searching for one palette or pattern
 - #22 Support search by username one searching for one user (Lover)
 - #22 Support search by hexvalue when searching for one color
+- #24 Improve usage explanation in the README
 
 **Deleted**
 
