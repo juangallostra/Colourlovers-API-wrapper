@@ -263,7 +263,7 @@ class ColourLovers(object):
         response as raw data, either in json or xml format.
 
         :param search_term: the main type of query to be performed from the different
-        available type (pattern, palette, lover, color, ...)
+        available types (pattern, palette, lover, color, ...)
         :param optional_request_term: if an optional request term has to be included
         in the query (new, top, random)
         :param kwargs: parameters of the query as keyword arguments where the keyword
@@ -323,11 +323,15 @@ class ColourLovers(object):
 
     def __request(self, search_term, optional_request_term, **kwargs):
         """
+        Build API request url and make the request with the specified parameters.
 
-        :param search_term:
-        :param optional_request_term:
-        :param kwargs:
-        :return:
+        :param search_term: the main type of query to be performed from the different
+        available types (pattern, palette, lover, color, ...)
+        :param optional_request_term: if an optional request term has to be included
+        in the query (new, top, random)
+        :param kwargs: parameters of the query as keyword arguments where the keyword
+        is the parameter name and its value is the parameter value
+        :return: the response of the request as raw data in json or xml format
         """
         # build API request
         try:
@@ -356,11 +360,18 @@ class ColourLovers(object):
 
     def __process_response(self, raw_data, api_response, request_type_class):
         """
+        Once a request to the API has been made, process the obtained data 
+        and parse it as requested.
 
-        :param raw_data:
-        :param api_response:
-        :param request_type_class:
-        :return:
+        Note: This method returns more than one type of object. It should be
+        refactored so that only one type of data is returned.
+
+        :param raw_data: Boolean specifying wether the obtained data should be 
+        processed or returned as is 
+        :param api_response: Raw data obtained from the API query
+        :param request_type_class: The type of data the request asked for
+        :return: Either None if no response was obtained, the raw data if
+        specified or the data wrapped in container objects 
         """
         if not api_response:
             return None
@@ -404,6 +415,12 @@ class ColourLovers(object):
         return processed_request(kwargs=kwargs, optional_request=optional_request_term)
 
     def __validate_optional_request(self, search_type, request_value):
+    		"""
+
+    		:param search_type:
+    		:param request_value:
+    		:return:
+    		"""
             request = set({request_value})
             if bool(request.intersection(self.__API_REQUEST_TYPE[search_type])):
                 return True
