@@ -36,7 +36,7 @@ Import the wrapper
 ~~~~~~~~~~~~~~~~~~
 
 1. Download the wrapper via ``pip``:
-   ``pip install colourlovers``
+   ``pip install colourlovers``.
    Alternatively, clone the repository by typing in a terminal:
    ``git clone https://github.com/juangallostra/Colourlovers-API-wrapper.git``
 2. Start a Python terminal session in the directory where you cloned the
