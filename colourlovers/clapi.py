@@ -410,20 +410,20 @@ class ColourLovers(object):
             # then ignore the rest of arguments since they are not allowed
             if self.__API_EXCLUSIVE_REQUEST == kwargs[valid_keyword] or search_type == self.__API_STATS:
                 kwargs = {}
-            del kwargs[valid_keyword]
+            else:
+                del kwargs[valid_keyword]
 
         return processed_request(kwargs=kwargs, optional_request=optional_request_term)
 
     def __validate_optional_request(self, search_type, request_value):
-    		"""
-
-    		:param search_type:
-    		:param request_value:
-    		:return:
-    		"""
-            request = set({request_value})
-            if bool(request.intersection(self.__API_REQUEST_TYPE[search_type])):
-                return True
-            elif search_type in self.__ALLOW_FLEXIBLE_REQUEST:
-                return True
-            return False
+        """
+        :param search_type:
+        :param request_value:
+        :return:
+        """
+        request = set({request_value})
+        if bool(request.intersection(self.__API_REQUEST_TYPE[search_type])):
+            return True
+        elif search_type in self.__ALLOW_FLEXIBLE_REQUEST:
+            return True
+        return False
