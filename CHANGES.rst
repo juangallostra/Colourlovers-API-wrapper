@@ -1,10 +1,22 @@
 ColourLovers API wrapper CHANGELOG
 ==================================
 
+0.2.0
+-----
+
+**Added**
+
+**Deleted**
+
+**Changed**
+
+**Fixed**
+
+- #27 Random search for palettes doesn't work
+
 
 Alpha version (unreleased)
 --------------------------
-
 
 **Added**
 
