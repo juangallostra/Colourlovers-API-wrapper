@@ -23,7 +23,7 @@ class ColourLovers(object):
     """
     def __init__(self):
 
-        self.__API_URL = "http://www.colourlovers.com/api/"
+        self.__API_URL = "https://www.colourlovers.com/api/"
         # When searching for new, top or random use the request keyword in the called search method
         self.__API_REQUEST_KEYWORDS = {
             "palettes": "request",
