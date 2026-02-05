@@ -339,12 +339,12 @@ class ColourLovers(object):
         except:
             api_request_url = self.__API_URL + search_term
 
-        for argument in kwargs.keys():
+        for argument, values in kwargs.items():
             # build API parameter specification string
             if type(kwargs[argument]) == list:
-                values = ','.join([str(value) for value in kwargs[argument]])
+                values = ','.join([str(value) for value in values])
             else:
-                values = str(kwargs[argument])
+                values = str(values)
             additional_parameter = self.__API_ADD_PARAM[0] + argument + self.__API_ADD_PARAM[1] + values
             # add parameter to API request
             api_request_url += additional_parameter
