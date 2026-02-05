@@ -339,15 +339,18 @@ class ColourLovers(object):
         except:
             api_request_url = self.__API_URL + search_term
 
+        additional_parameters = []
         for argument, values in kwargs.items():
             # build API parameter specification string
             if type(kwargs[argument]) == list:
                 values = ','.join([str(value) for value in values])
             else:
                 values = str(values)
-            additional_parameter = self.__API_ADD_PARAM[0] + argument + self.__API_ADD_PARAM[1] + values
-            # add parameter to API request
-            api_request_url += additional_parameter
+            additional_parameters.append(f"{argument}={values}")
+        # add parameter to API request
+        if additional_parameters:
+            additional_parameters = "&".join(additional_parameters)
+            api_request_url += "?" + additional_parameters
         # HTTP API request
         req = Request(api_request_url, headers={'User-Agent': "Magic Browser"})
         # Make request and read response
