@@ -351,12 +351,9 @@ class ColourLovers(object):
         # HTTP API request
         req = Request(api_request_url, headers={'User-Agent': "Magic Browser"})
         # Make request and read response
-        try:
-            response = urlopen(req)
-            data = response.read()
-            return data
-        except URLError as e:
-            print(e)
+        response = urlopen(req)
+        data = response.read()
+        return data
 
     def __process_response(self, raw_data, api_response, request_type_class):
         """
