@@ -6,12 +6,12 @@ This test unit is intended only for testing and not for anything else
 
 UNDER DEVELOPMENT
 """
-import colourlovers_wrapper as cl_wrapper
+from colourlovers import clapi
 
 
 if __name__=="__main__":
 
-    cl = cl_wrapper.ColourLovers()
+    cl = clapi.ColourLovers()
 
     # Method test
     # Unique request tests
