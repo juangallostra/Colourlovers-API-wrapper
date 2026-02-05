@@ -96,7 +96,6 @@ class Pattern(HexConverter, DrawColors):
 
 class Lover(object):
     def __init__(self, json_data):
-        self.id = json_data["id"]
         self.username = json_data["userName"]
         self.date_registered = json_data["dateRegistered"]
         self.date_last_active = json_data["dateLastActive"]
