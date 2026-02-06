@@ -30,6 +30,7 @@ class ColourLovers(object):
             "patterns": "request",
             "colors": "request",
             "stats": "request",
+            "lovers": "request",
             "color": "hexvalue",
             "palette": "id",
             "pattern": "id",
