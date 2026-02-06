@@ -23,7 +23,7 @@ class ColourLovers(object):
     """
     def __init__(self):
 
-        self.__API_URL = "http://www.colourlovers.com/api/"
+        self.__API_URL = "https://www.colourlovers.com/api/"
         # When searching for new, top or random use the request keyword in the called search method
         self.__API_REQUEST_KEYWORDS = {
             "palettes": "request",
@@ -339,24 +339,24 @@ class ColourLovers(object):
         except:
             api_request_url = self.__API_URL + search_term
 
-        for argument in kwargs.keys():
+        additional_parameters = []
+        for argument, values in kwargs.items():
             # build API parameter specification string
             if type(kwargs[argument]) == list:
-                values = ','.join([str(value) for value in kwargs[argument]])
+                values = ','.join([str(value) for value in values])
             else:
-                values = str(kwargs[argument])
-            additional_parameter = self.__API_ADD_PARAM[0] + argument + self.__API_ADD_PARAM[1] + values
-            # add parameter to API request
-            api_request_url += additional_parameter
+                values = str(values)
+            additional_parameters.append(f"{argument}={values}")
+        # add parameter to API request
+        if additional_parameters:
+            additional_parameters = "&".join(additional_parameters)
+            api_request_url += "?" + additional_parameters
         # HTTP API request
         req = Request(api_request_url, headers={'User-Agent': "Magic Browser"})
         # Make request and read response
-        try:
-            response = urlopen(req)
-            data = response.read()
-            return data
-        except URLError as e:
-            print(e)
+        response = urlopen(req)
+        data = response.read()
+        return data
 
     def __process_response(self, raw_data, api_response, request_type_class):
         """
