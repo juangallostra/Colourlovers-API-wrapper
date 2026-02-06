@@ -29,7 +29,7 @@ class HexConverter(CommonData):
 
     def hex_to_rgb(self):
         # Converts color in hex to RGB. Returns list of tuples where the channel order is (R,G,B)
-        return [tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4)) for hex_color in self.colors]
+        return [tuple(int(hex_color[i : i + 2], 16) for i in (0, 2, 4)) for hex_color in self.colors]
 
     def hex_to_hsv(self):
         # Converts color in hex to HSV. Returns list of tuples such that each tuple is (H,S,V)
@@ -51,6 +51,7 @@ class HSV(object):
         self.value = hsv["value"]
         self.hsv = (self.hue, self.saturation, self.value)
 
+
 class DrawColors(object):
     def __init__(self, rgb_colors):
         self.rgb_colors = rgb_colors
@@ -58,12 +59,12 @@ class DrawColors(object):
 
     def draw(self, tile_size=24, offset=8):
         # Allows the visualization of colors
-        im = Image.new("RGB", ((offset+tile_size+offset)*self.num_colors, tile_size), "black")
+        im = Image.new("RGB", ((offset + tile_size + offset) * self.num_colors, tile_size), "black")
         draw = ImageDraw.Draw(im)
         for i in range(self.num_colors):
             draw.rectangle(
-                (((offset+tile_size)*i, 0), ((offset+tile_size)*(i+1)-offset, tile_size)),
-                fill=self.rgb_colors[i]
+                (((offset + tile_size) * i, 0), ((offset + tile_size) * (i + 1) - offset, tile_size)),
+                fill=self.rgb_colors[i],
             )
         im.show()
 

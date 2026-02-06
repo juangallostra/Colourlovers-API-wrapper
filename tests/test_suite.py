@@ -6,11 +6,11 @@ This test unit is intended only for testing and not for anything else
 
 UNDER DEVELOPMENT
 """
+
 from colourlovers import clapi
 
 
-if __name__=="__main__":
-
+if __name__ == "__main__":
     cl = clapi.ColourLovers()
 
     # Method test

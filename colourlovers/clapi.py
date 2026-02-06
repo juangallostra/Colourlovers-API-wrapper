@@ -1,7 +1,7 @@
 # Imports
 import collections
 import json
-from urllib.request import Request, urlopen, URLError
+from urllib.request import Request, urlopen
 from colourlovers.data_containers import *
 
 
@@ -21,6 +21,7 @@ class ColourLovers(object):
     """
     ColourLovers API python wrapper
     """
+
     def __init__(self):
 
         self.__API_URL = "https://www.colourlovers.com/api/"
@@ -42,27 +43,27 @@ class ColourLovers(object):
                 {
                     "new",
                     "top",
-                    "random"
+                    "random",
                 }
             ),
             "palettes": set(
                 {
                     "new",
                     "top",
-                    "random"
+                    "random",
                 }
             ),
             "patterns": set(
                 {
                     "new",
                     "top",
-                    "random"
+                    "random",
                 }
             ),
             "lovers": set(
                 {
                     "new",
-                    "top"
+                    "top",
                 }
             ),
             "stats": set(
@@ -70,13 +71,13 @@ class ColourLovers(object):
                     "colors",
                     "palettes",
                     "patterns",
-                    "lovers"
+                    "lovers",
                 }
             ),
             "color": set(),
             "palette": set(),
             "pattern": set(),
-            "lover": set()
+            "lover": set(),
         }
         self.__API_PARAMETERS = {
             "colors": set(
@@ -91,7 +92,7 @@ class ColourLovers(object):
                     "numResults",
                     "resultOffset",
                     "format",
-                    "jsonCallback"
+                    "jsonCallback",
                 }
             ),
             "palettes": set(
@@ -108,7 +109,7 @@ class ColourLovers(object):
                     "resultOffset",
                     "format",
                     "jsonCallback",
-                    "showPaletteWidths"
+                    "showPaletteWidths",
                 }
             ),
             "patterns": set(
@@ -124,7 +125,7 @@ class ColourLovers(object):
                     "numResults",
                     "resultOffset",
                     "format",
-                    "jsonCallback"
+                    "jsonCallback",
                 }
             ),
             "lovers": set(
@@ -134,44 +135,44 @@ class ColourLovers(object):
                     "numResults",
                     "resultOffset",
                     "format",
-                    "jsonCallback"
+                    "jsonCallback",
                 }
             ),
             "stats": set(
                 {
                     "format",
-                    "jsonCallback"
+                    "jsonCallback",
                 }
             ),
             "color": set(
                 {
                     "format",
-                    "jsonCallback"
+                    "jsonCallback",
                 }
             ),
             "palette": set(
                 {
                     "format",
-                    "jsonCallback"
+                    "jsonCallback",
                 }
             ),
             "pattern": set(
                 {
                     "format",
-                    "jsonCallback"
+                    "jsonCallback",
                 }
             ),
             "lover": set(
                 {
                     "comments",
                     "format",
-                    "jsonCallback"
+                    "jsonCallback",
                 }
-            )
+            ),
         }
         self.__API_SWITCHES = {
             "palette": set({"showPaletteWidths"}),
-            "lover": set({"comments"})
+            "lover": set({"comments"}),
         }
         self.__API_ADD_PARAM = ["&", "=", "?", "/"]
         self.__API_COLORS = "colors"
@@ -215,6 +216,7 @@ class ColourLovers(object):
         :return: function that will know how to make queries for the specified
         type and process and store the obtained data
         """
+
         def _api_search(raw_data=False, **kwargs):
             """
             This method validates the request parameters and, if all
@@ -237,7 +239,7 @@ class ColourLovers(object):
             # type of request (pattern, palette, colour, ...) that is to be performed
             processed_request = self.__process_optional_requests(search_type, **kwargs)
             if type(raw_data) != bool:
-                raise ValueError("Invalid parameter "+str(raw_data))
+                raise ValueError("Invalid parameter " + str(raw_data))
 
             if not raw_data:
                 # if user hasn't asked for the raw data of the API
@@ -245,9 +247,11 @@ class ColourLovers(object):
                 # the data in json format
                 processed_request.kwargs["format"] = "json"
             # Once request type has been validated make the query to the API
-            api_response = self.__query(search_type,
-                                        processed_request.optional_request,
-                                        **processed_request.kwargs).decode()
+            api_response = self.__query(
+                search_type,
+                processed_request.optional_request,
+                **processed_request.kwargs,
+            ).decode()
             # Process the data obtained from the query. We will build container
             # objects by default unless otherwise specified
             containers = self.__process_response(raw_data, api_response, data_container)
@@ -255,6 +259,7 @@ class ColourLovers(object):
                 return containers
             else:
                 print("The data you asked for could not be retrieved")
+
         return _api_search
 
     def __query(self, search_term, optional_request_term, **kwargs):
@@ -300,7 +305,7 @@ class ColourLovers(object):
             # Look for invalid parameter names
             invalid_parameters = set(kwargs.keys()) - self.__API_PARAMETERS[search_term]
             if invalid_parameters:
-                raise ValueError("Unsupported search argument/s " + ', '.join(invalid_parameters))
+                raise ValueError("Unsupported search argument/s " + ", ".join(invalid_parameters))
             # Look for invalid parameter value types
             types = [(i, type(value)) for (i, value) in enumerate(kwargs.values())]
             for parameter_type in types:
@@ -309,8 +314,9 @@ class ColourLovers(object):
                 # If the argument value is a list, the type of all the elements in the list should be
                 # a valid type and also, all the values should be of the same type
                 elif parameter_type[1] == list:
-                    parameter_values_types = [type(parameter_value) for parameter_value in
-                                              kwargs.values()[parameter_type[0]]]
+                    parameter_values_types = [
+                        type(parameter_value) for parameter_value in kwargs.values()[parameter_type[0]]
+                    ]
                     # Select the type of the first value in list as the parameter type
                     # and look for inconsistencies or invalid types
                     type_selector = parameter_values_types[0]
@@ -319,7 +325,8 @@ class ColourLovers(object):
                     for parameter_value_type in parameter_values_types:
                         if parameter_value_type != type_selector:
                             raise ValueError(
-                                "Inconsistent value types in argument " + str(kwargs.keys()[parameter_type[0]]))
+                                "Inconsistent value types in argument " + str(kwargs.keys()[parameter_type[0]])
+                            )
         return True
 
     def __request(self, search_term, optional_request_term, **kwargs):
@@ -344,7 +351,7 @@ class ColourLovers(object):
         for argument, values in kwargs.items():
             # build API parameter specification string
             if type(kwargs[argument]) == list:
-                values = ','.join([str(value) for value in values])
+                values = ",".join([str(value) for value in values])
             else:
                 values = str(values)
             additional_parameters.append(f"{argument}={values}")
@@ -353,7 +360,7 @@ class ColourLovers(object):
             additional_parameters = "&".join(additional_parameters)
             api_request_url += "?" + additional_parameters
         # HTTP API request
-        req = Request(api_request_url, headers={'User-Agent': "Magic Browser"})
+        req = Request(api_request_url, headers={"User-Agent": "Magic Browser"})
         # Make request and read response
         response = urlopen(req)
         data = response.read()
@@ -395,7 +402,7 @@ class ColourLovers(object):
         :param kwargs:
         :return:
         """
-        processed_request = collections.namedtuple('Processed_request', ['kwargs', 'optional_request'])
+        processed_request = collections.namedtuple("Processed_request", ["kwargs", "optional_request"])
         optional_request_term = None
         # Only process optional request if it is present in the keywords
         valid_keyword = self.__API_REQUEST_KEYWORDS[search_type] or None
