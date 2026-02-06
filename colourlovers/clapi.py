@@ -245,7 +245,7 @@ class ColourLovers(object):
             # Validate the type of request (new, top, random, ...) taking into account the
             # type of request (pattern, palette, colour, ...) that is to be performed
             processed_request = self.__process_optional_requests(search_type, **kwargs)
-            if type(raw_data) != bool:
+            if not isinstance(raw_data, bool):
                 raise ValueError("Invalid parameter " + str(raw_data))
 
             if not raw_data:
@@ -320,7 +320,7 @@ class ColourLovers(object):
                     raise ValueError("Unsupported argument value type " + str(parameter_type))
                 # If the argument value is a list, the type of all the elements in the list should be
                 # a valid type and also, all the values should be of the same type
-                elif parameter_type[1] == list:
+                elif isinstance(parameter_type[1], list):
                     parameter_values_types = [
                         type(parameter_value) for parameter_value in kwargs.values()[parameter_type[0]]
                     ]
@@ -357,7 +357,7 @@ class ColourLovers(object):
         additional_parameters = []
         for argument, values in kwargs.items():
             # build API parameter specification string
-            if type(kwargs[argument]) == list:
+            if isinstance(kwargs[argument], list):
                 values = ",".join([str(value) for value in values])
             else:
                 values = str(values)
@@ -394,7 +394,7 @@ class ColourLovers(object):
             return api_response
         else:
             parsed_json = json.loads(api_response)
-            if type(parsed_json) == dict:
+            if isinstance(parsed_json, dict):
                 response_containers = request_type_class(parsed_json)
             else:
                 response_containers = []
