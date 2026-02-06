@@ -2,6 +2,15 @@ import colorsys
 from PIL import Image, ImageDraw
 
 
+__all__ = (
+    "Color",
+    "Palette",
+    "Pattern",
+    "Lover",
+    "Stats",
+)
+
+
 # Data containers for API responses
 # Base classes
 class CommonData(object):

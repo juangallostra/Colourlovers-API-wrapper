@@ -2,7 +2,14 @@
 import collections
 import json
 from urllib.request import Request, urlopen
-from colourlovers.data_containers import *
+
+from .data_containers import (
+    Color,
+    Palette,
+    Pattern,
+    Lover,
+    Stats,
+)
 
 
 # TODO
