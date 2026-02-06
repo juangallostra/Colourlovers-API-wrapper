@@ -349,10 +349,9 @@ class ColourLovers(object):
         :return: the response of the request as raw data in json or xml format
         """
         # build API request
-        try:
-            api_request_url = self.__API_URL + search_term + optional_request_term
-        except:
-            api_request_url = self.__API_URL + search_term
+        api_request_url = self.__API_URL + search_term
+        if optional_request_term:
+            api_request_url += optional_request_term
 
         additional_parameters = []
         for argument, values in kwargs.items():

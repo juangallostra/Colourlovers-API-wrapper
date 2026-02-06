@@ -117,11 +117,8 @@ class Lover(object):
         self.num_comments_made = json_data["numCommentsMade"]
         self.num_lovers = json_data["numLovers"]
         self.num_comments_on_profile = json_data["numCommentsOnProfile"]
-        try:
-            pass
-        # implement comments section -> switch
-        except:
-            pass
+
+        # TODO: implement comments section -> switch
 
 
 class Stats(object):
