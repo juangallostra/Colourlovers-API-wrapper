@@ -39,4 +39,3 @@ Alpha version (unreleased)
 
 - #14 When making a query the type of raw-data is checked. In case it is not a boolean value an exception is raised
 - #23 Fix data loss when creating Python container objects
-

@@ -11,7 +11,7 @@ from colourlovers.data_containers import *
 # DONE 	- implement searches for new, top and random parameters.
 # DONE	- check than when random is used no more parameters are used.
 # DONE	- valid parameter types when doing unique searches
-# 		- unicode to string conversion ? 
+# 		- unicode to string conversion ?
 # DONE	- stats search
 #       - allow search by id in pattern, palette
 
@@ -361,18 +361,18 @@ class ColourLovers(object):
 
     def __process_response(self, raw_data, api_response, request_type_class):
         """
-        Once a request to the API has been made, process the obtained data 
+        Once a request to the API has been made, process the obtained data
         and parse it as requested.
 
         Note: This method returns more than one type of object. It should be
         refactored so that only one type of data is returned.
 
-        :param raw_data: Boolean specifying wether the obtained data should be 
-        processed or returned as is 
+        :param raw_data: Boolean specifying whether the obtained data should be
+        processed or returned as is
         :param api_response: Raw data obtained from the API query
         :param request_type_class: The type of data the request asked for
         :return: Either None if no response was obtained, the raw data if
-        specified or the data wrapped in container objects 
+        specified or the data wrapped in container objects
         """
         if not api_response:
             return None
