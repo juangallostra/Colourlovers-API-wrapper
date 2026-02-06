@@ -14,7 +14,7 @@ Colourlovers-API-wrapper
     :target: https://github.com/juangallostra/Colourlovers-API-wrapper
 
 
-    
+
 
 Python wrapper for the `API <https://www.colourlovers.com/api>`__
 provided by www.colourlovers.com
