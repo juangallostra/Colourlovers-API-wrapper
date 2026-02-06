@@ -224,18 +224,13 @@ class ColourLovers(object):
         type and process and store the obtained data
         """
 
-        def _api_search(raw_data=False, **kwargs):
+        def _api_search(**kwargs):
             """
             This method validates the request parameters and, if all
             of them are valid, builds the request and posts it to the
             API. It will return the data obtained from the response either
             as raw data or as a Python object.
 
-            :param raw_data: Specifies how the data from the response
-            should be treated. If True, the data is returned as it is obtained
-            from the API response without any treatment. If False, the
-            corresponding Python object to store the obtained data is created and
-            returned
             :param kwargs: query parameters for the specified type of request (Pattern,
             Palette, ...). The keyword is the parameter name and the value is the parameter
             value
@@ -245,14 +240,8 @@ class ColourLovers(object):
             # Validate the type of request (new, top, random, ...) taking into account the
             # type of request (pattern, palette, colour, ...) that is to be performed
             processed_request = self.__process_optional_requests(search_type, **kwargs)
-            if not isinstance(raw_data, bool):
-                raise ValueError("Invalid parameter " + str(raw_data))
 
-            if not raw_data:
-                # if user hasn't asked for the raw data of the API
-                # response build container objects. For that, we need
-                # the data in json format
-                processed_request.kwargs["format"] = "json"
+            processed_request.kwargs["format"] = "json"
             # Once request type has been validated make the query to the API
             api_response = self.__query(
                 search_type,
@@ -261,7 +250,7 @@ class ColourLovers(object):
             ).decode()
             # Process the data obtained from the query. We will build container
             # objects by default unless otherwise specified
-            containers = self.__process_response(raw_data, api_response, data_container)
+            containers = self.__process_response(api_response, data_container)
             if containers is not None:
                 return containers
             else:
@@ -372,7 +361,7 @@ class ColourLovers(object):
         data = response.read()
         return data
 
-    def __process_response(self, raw_data, api_response, request_type_class):
+    def __process_response(self, api_response, request_type_class):
         """
         Once a request to the API has been made, process the obtained data
         and parse it as requested.
@@ -380,8 +369,6 @@ class ColourLovers(object):
         Note: This method returns more than one type of object. It should be
         refactored so that only one type of data is returned.
 
-        :param raw_data: Boolean specifying whether the obtained data should be
-        processed or returned as is
         :param api_response: Raw data obtained from the API query
         :param request_type_class: The type of data the request asked for
         :return: Either None if no response was obtained, the raw data if
@@ -389,8 +376,6 @@ class ColourLovers(object):
         """
         if not api_response:
             return None
-        if raw_data:
-            return api_response
         else:
             parsed_json = json.loads(api_response)
             if isinstance(parsed_json, dict):
