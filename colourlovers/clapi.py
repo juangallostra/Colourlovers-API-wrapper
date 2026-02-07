@@ -46,140 +46,112 @@ class ColourLovers(object):
         }
         self.__API_EXCLUSIVE_REQUEST = "random"
         self.__API_REQUEST_TYPE = {
-            "colors": set(
-                {
-                    "new",
-                    "top",
-                    "random",
-                }
-            ),
-            "palettes": set(
-                {
-                    "new",
-                    "top",
-                    "random",
-                }
-            ),
-            "patterns": set(
-                {
-                    "new",
-                    "top",
-                    "random",
-                }
-            ),
-            "lovers": set(
-                {
-                    "new",
-                    "top",
-                }
-            ),
-            "stats": set(
-                {
-                    "colors",
-                    "palettes",
-                    "patterns",
-                    "lovers",
-                }
-            ),
+            "colors": {
+                "new",
+                "top",
+                "random",
+            },
+            "palettes": {
+                "new",
+                "top",
+                "random",
+            },
+            "patterns": {
+                "new",
+                "top",
+                "random",
+            },
+            "lovers": {
+                "new",
+                "top",
+            },
+            "stats": {
+                "colors",
+                "palettes",
+                "patterns",
+                "lovers",
+            },
             "color": set(),
             "palette": set(),
             "pattern": set(),
             "lover": set(),
         }
         self.__API_PARAMETERS = {
-            "colors": set(
-                {
-                    "lover",
-                    "hueRange",
-                    "briRange",
-                    "keywords",
-                    "keywordExact",
-                    "orderCol",
-                    "sortBy",
-                    "numResults",
-                    "resultOffset",
-                    "format",
-                    "jsonCallback",
-                }
-            ),
-            "palettes": set(
-                {
-                    "lover",
-                    "hueOption",
-                    "hex",
-                    "hex_logic",
-                    "keywords",
-                    "keywordExact",
-                    "orderCol",
-                    "sortBy",
-                    "numResults",
-                    "resultOffset",
-                    "format",
-                    "jsonCallback",
-                    "showPaletteWidths",
-                }
-            ),
-            "patterns": set(
-                {
-                    "lover",
-                    "hueOption",
-                    "hex",
-                    "hex_logic",
-                    "keywords",
-                    "keywordExact",
-                    "orderCol",
-                    "sortBy",
-                    "numResults",
-                    "resultOffset",
-                    "format",
-                    "jsonCallback",
-                }
-            ),
-            "lovers": set(
-                {
-                    "orderCol",
-                    "sortBy",
-                    "numResults",
-                    "resultOffset",
-                    "format",
-                    "jsonCallback",
-                }
-            ),
-            "stats": set(
-                {
-                    "format",
-                    "jsonCallback",
-                }
-            ),
-            "color": set(
-                {
-                    "format",
-                    "jsonCallback",
-                }
-            ),
-            "palette": set(
-                {
-                    "format",
-                    "jsonCallback",
-                }
-            ),
-            "pattern": set(
-                {
-                    "format",
-                    "jsonCallback",
-                }
-            ),
-            "lover": set(
-                {
-                    "comments",
-                    "format",
-                    "jsonCallback",
-                }
-            ),
+            "colors": {
+                "lover",
+                "hueRange",
+                "briRange",
+                "keywords",
+                "keywordExact",
+                "orderCol",
+                "sortBy",
+                "numResults",
+                "resultOffset",
+                "format",
+                "jsonCallback",
+            },
+            "palettes": {
+                "lover",
+                "hueOption",
+                "hex",
+                "hex_logic",
+                "keywords",
+                "keywordExact",
+                "orderCol",
+                "sortBy",
+                "numResults",
+                "resultOffset",
+                "format",
+                "jsonCallback",
+                "showPaletteWidths",
+            },
+            "patterns": {
+                "lover",
+                "hueOption",
+                "hex",
+                "hex_logic",
+                "keywords",
+                "keywordExact",
+                "orderCol",
+                "sortBy",
+                "numResults",
+                "resultOffset",
+                "format",
+                "jsonCallback",
+            },
+            "lovers": {
+                "orderCol",
+                "sortBy",
+                "numResults",
+                "resultOffset",
+                "format",
+                "jsonCallback",
+            },
+            "stats": {
+                "format",
+                "jsonCallback",
+            },
+            "color": {
+                "format",
+                "jsonCallback",
+            },
+            "palette": {
+                "format",
+                "jsonCallback",
+            },
+            "pattern": {
+                "format",
+                "jsonCallback",
+            },
+            "lover": {
+                "comments",
+                "format",
+                "jsonCallback",
+            },
         }
         self.__API_SWITCHES = {
-            "palette": set({"showPaletteWidths"}),
-            "lover": set({"comments"}),
+            "palette": {"showPaletteWidths"},
+            "lover": {"comments"},
         }
         self.__API_ADD_PARAM = ["&", "=", "?", "/"]
         self.__API_COLORS = "colors"
@@ -420,7 +392,7 @@ class ColourLovers(object):
         :param request_value:
         :return:
         """
-        request = set({request_value})
+        request = {request_value}
         if bool(request.intersection(self.__API_REQUEST_TYPE[search_type])):
             return True
         elif search_type in self.__ALLOW_FLEXIBLE_REQUEST:
