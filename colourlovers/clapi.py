@@ -24,7 +24,7 @@ from .data_containers import (
 
 
 # API Wrapper
-class ColourLovers(object):
+class ColourLovers:
     """
     ColourLovers API python wrapper
     """

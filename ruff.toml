@@ -1,1 +1,9 @@
 line-length = 120
+target-version = "py310"
+
+[lint]
+extend-select = [
+    # https://docs.astral.sh/ruff/rules/#pyupgrade-up
+    # https://github.com/asottile/pyupgrade
+    "UP",
+]

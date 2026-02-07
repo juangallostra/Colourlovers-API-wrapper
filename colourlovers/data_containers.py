@@ -13,7 +13,7 @@ __all__ = (
 
 # Data containers for API responses
 # Base classes
-class CommonData(object):
+class CommonData:
     def __init__(self, json_data):
         self.id = json_data["id"]
         self.title = json_data["title"]
@@ -45,7 +45,7 @@ class HexConverter(CommonData):
         return [tuple(colorsys.rgb_to_hsv(rgb_color[0], rgb_color[1], rgb_color[2])) for rgb_color in self.hex_to_rgb()]
 
 
-class RGB(object):
+class RGB:
     def __init__(self, rgb):
         self.red = rgb["red"]
         self.green = rgb["green"]
@@ -53,7 +53,7 @@ class RGB(object):
         self.rgb = (self.red, self.green, self.blue)
 
 
-class HSV(object):
+class HSV:
     def __init__(self, hsv):
         self.hue = hsv["hue"]
         self.saturation = hsv["saturation"]
@@ -61,7 +61,7 @@ class HSV(object):
         self.hsv = (self.hue, self.saturation, self.value)
 
 
-class DrawColors(object):
+class DrawColors:
     def __init__(self, rgb_colors):
         self.rgb_colors = rgb_colors
         self.num_colors = len(self.rgb_colors)
@@ -104,7 +104,7 @@ class Pattern(HexConverter, DrawColors):
         DrawColors.__init__(self, self.hex_to_rgb())
 
 
-class Lover(object):
+class Lover:
     def __init__(self, json_data):
         self.username = json_data["userName"]
         self.date_registered = json_data["dateRegistered"]
@@ -121,6 +121,6 @@ class Lover(object):
         # TODO: implement comments section -> switch
 
 
-class Stats(object):
+class Stats:
     def __init__(self, json_data):
         self.total = json_data["total"]
